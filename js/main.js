@@ -11,7 +11,6 @@ function insertNewArticle(adminFormData) {
     dataType: "json",
     data: {
 
-
       "page_data" : adminFormData
     },
     success: function(data) {
@@ -37,8 +36,8 @@ function insertNewArticle(adminFormData) {
   //send adminFormData with AJAX to DB
  insertNewArticle(adminFormData);
  console.log("adminFormData: ", adminFormData);
-  //empty the form once we're done with the information in it
-  this.reset(); //.reset() is a JS function, NOT a jQuery function... :D
+  //empty the form once we're done with the information from within it
+  this.reset(); 
 
   //return false to prevent page reload on form submit
   return false;
