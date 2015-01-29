@@ -30,12 +30,12 @@ function insertNewArticle(adminFormData) {
     //prepare adminFormData to be sent with AJAX
     var adminFormData = {
       ":title" : $(this).find("#page_title").val(),
-      ":body" : $(this).find("#page_body").val()
+      ":content" : $(this).find("#page_content").val()
     };
   
 
   //send adminFormData with AJAX to DB
-  insertNewArticle(adminFormData);
+ insertNewArticle(adminFormData);
  console.log("adminFormData: ", adminFormData);
   //empty the form once we're done with the information in it
   this.reset(); //.reset() is a JS function, NOT a jQuery function... :D
