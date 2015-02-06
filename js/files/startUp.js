@@ -3,7 +3,7 @@ function startUp() {
 
 
 //setup history push/pop-state
-//  pushPopListeners();
+  pushPopListeners();
 
 //Initial döljs menyhanteringsfält
   $("#admin-form .menuLinkFields").hide();
