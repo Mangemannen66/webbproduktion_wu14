@@ -99,6 +99,7 @@ class Articlequery extends PDOHelper {
 
 
   public function getMenuLinks($menu_name) {
+    //$menu_name = "menu-main-menu";
     $menu_name = array(":menu_name" => $this->menu_name);
     $sql = "SELECT * FROM menu_links WHERE menu = :menu_name";
     
