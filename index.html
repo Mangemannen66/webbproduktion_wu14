@@ -6,8 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
       <script src="js/lib/jquery-2.1.3.js"></script>
 	  <script src="js/lib/bootstrap.js"></script>
-	  <script src="js/main.js"></script>
-
+   <!--<script src="js/files/pushPop.js"></script>-->
+   <script src="js/files/ajaxDB.js"></script>
+   <script src="js/files/menus.js"></script>
+   <script src="js/files/startUp.js"></script>
+      <script src="js/main.js"></script>
 	  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	  <!--<link href="css/hover-min.css" rel="stylesheet">-->
 	  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all">
@@ -20,16 +23,22 @@
   <section class="row">
     <div class="banner"></div>
   	
-      <div class="navbar navbar-default navbar-fixed-top">
+      <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="navbar-header">
+              <!-- mobile menu button, -->
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#md-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
       	 <a class="navbar-brand" href="home">Start</a>
       </div>
-      <div>
-      	
-
-      </div>
+<div class="collapse navbar-collapse" id="md-navbar-collapse"></div>
     </nav>
   </section>
   </header>
+  <!--MainContainer-->
   <main class="container">
       <div class="page-header">	
     <h2>Webbsida - Administrering</h2>
@@ -38,21 +47,51 @@
 
     <form class="form-horizontal">
       <div class="form-group">
-      	<label class="col-sm-4 control-label" for="page_titel">Sidnamn:</label>
+      	<label class="col-sm-4 control-label" for="page_titel">Sidans Namn:</label>
       	<div class="col-sm-8">
       	  <input type="text" id="page_title" class="form-control" placeholder="Skriv in ett namn på sidan." required>
       	</div>
       </div>
-    <form class="form-horizontal">
       <div class="form-group">
-      	<label class="col-sm-4 control-label" for="page_content">Innehåll: </label>
+        <label class="col-sm-4 control-label" for="page_url">Sidans URL-adress:</label>
+        <div class="col-sm-8">
+          <div class="input-group pageUrlGroup">
+            <span class="input-group-addon">
+              <input type="checkbox">
+            </span>
+            <input type="text" id="page_url" class="form-control" placeholder="Skriv in en URL-adress för sidan." disabled>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+      	<label class="col-sm-4 control-label" for="page_content">Sid-Innehåll: </label>
       	<div class="col-sm-8">
       	  <textarea id="page_content" class="form-control" rows="10" placeholder="Skriv in ett innehåll för sidan." required></textarea> 
       	</div>
       </div>
+       <div class="form-group addToMenu">
+         <label class="col-sm-4 control-label" for="page_menu">Meny</label>
+        <div class="col-sm-8">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="">Lägg till i menyn
+            </label>
+          </div>
+        </div>
+        
+        <div class="col-sm-8 col-sm-offset-4 menuLinkFields">
+          <div class="input-group">
+            <input type="text" class="form-control" id="menu_title" placeholder="Skriv in meny-länk-titel...">
+            <span class="input-group-addon" id="basic-addon2">Sortering:</span>
+            <input type="number" value="0" id="menu_weight" class="form-control">
+            </div>
+            <div class="menuSelect">
+            </div>
+          </div>
+        </div>
         <div class="form-group">
           <div class="col-sm-offset-4 col-sm-8">
-            <button type="submit" class="btn btn-success btn-xs">Spara sidan</button>
+            <button type="submit" class="btn btn-success btn-lg">Spara sidan</button>
           </div>
         </div>            
     </section>
