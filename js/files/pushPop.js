@@ -12,23 +12,14 @@ function showPage(pageUrl) {
   if (!pageUrl || pageUrl == "home") {
     pageUrl = "content-list";
   }
-  getMenuLinks("menu-main-menu", createMainMenu);
+  //getMenuLinks("menu-main-menu", createMainMenu);
 
   if (pageUrl == "admin-form") {
    //hide "Add to menu" fields initially
    // $("#admin-form .menuLinkFields").hide();
     getMenuLinks("menu-main-menu", createAdminMenuSelect);
   }
- else {
-    //else try to find a page for the url using 
-    //getCurrentPage() from ajax.js 
-    getCurrentPage(pageUrl);
 
-    //once we have sent our ajax request for page data,
-    //change pageUrl to the correct section id so that our
-    //section shows
-    pageUrl = "page";
-  }
 
   //then find any links in body pointing to the pageUrl,
   $("body").find('a[href="'+pageUrl+'"]').each(function() {

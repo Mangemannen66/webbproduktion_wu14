@@ -55,7 +55,7 @@ function saveUrl() {
 
 function addMenuLink() {
 
-    console.log("test ");
+    //console.log("test ");
 
       //if the user has been asked to add page to menu
     if ($('.addToMenu input[type="checkbox"]').is(":checked")) {
