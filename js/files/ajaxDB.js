@@ -1,4 +1,4 @@
-
+$(function(){
 
 
 
@@ -126,4 +126,5 @@ function getMenuLinks(menu_name, successFunction) {
 }
 
 
+});
 

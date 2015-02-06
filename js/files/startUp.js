@@ -3,7 +3,7 @@ function startUp() {
 
 
 //setup history push/pop-state
-  pushPopListeners();
+//  pushPopListeners();
 
 //Initial döljs menyhanteringsfält
   $("#admin-form .menuLinkFields").hide();
@@ -27,7 +27,6 @@ function startUp() {
       $('#page_url').val(generateServerName($(this).val()));
     }
   });
-
 
 
   //adminForm page_url blur handler
@@ -203,6 +202,8 @@ function buildSelectOptions(select_html, menuItems, level) {
   return select_html;
 }
 
+ //saveArticle(adminPageData);
+ //console.log("adminPageData: ", adminPageData);
 
 
 
