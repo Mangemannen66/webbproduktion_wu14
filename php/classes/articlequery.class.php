@@ -52,6 +52,8 @@ class Articlequery extends PDOHelper {
   }
 
   public function addMenuLink($menu_data){
+
+    /*
     $menu_data["parent"]["menu"] = null;
     $menu_link[":menu_link_menu"] = $menu_name;
     $sql = "INSERT INTO menu_links (title, path, menu, weight) VALUES (:title, :path, :menu_link_menu, :weight)";
@@ -66,9 +68,9 @@ class Articlequery extends PDOHelper {
     return $this->query($sql, $menu_data);
   }
 
-    /*
+  */
       if (isset($menu_data)) {
-      $sql = "INSERT INTO menu_links (title, path, menu, weight) VALUES (:title, :path, :menu_name, :weight)";
+      $sql = "INSERT INTO menu_links (title, path, menu, plid, weight) VALUES (:title, :path, :menu_name, :plid, :weight)";
       //$menu_data["parent"]["menu"] = null;
        //$menu_data["parent"]["mlid"] = null;
 
@@ -78,16 +80,16 @@ class Articlequery extends PDOHelper {
         ":title" => $menu_data["title"],
         ":path" => $url_path,
         ":menu_name" => $menu_link["parent"]["menu"],
-        //":plid" => $menu_data["parent"]["mlid"] ? $menu_data["parent"]["mlid"] : null,
+        ":plid" => $menu_data["parent"]["mlid"] ? $menu_data["parent"]["mlid"] : null,
         ":weight" => $menu_data["weight"],
       );
       return $this->query($sql, $menu_data);
-
+      var_dump($sql, $menu_data);
     }
 
   }
 
-*/
+
   /**
    * Menus
    */
@@ -99,7 +101,7 @@ class Articlequery extends PDOHelper {
 
 
   public function getMenuLinks($menu_name) {
-    //$menu_name = "menu-main-menu";
+    $menu_name = "menu-main-menu";
     $menu_name = array(":menu_name" => $this->menu_name);
     $sql = "SELECT * FROM menu_links WHERE menu = :menu_name";
     

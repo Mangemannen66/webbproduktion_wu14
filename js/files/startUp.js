@@ -3,7 +3,7 @@ function startUp() {
 
 
 //setup history push/pop-state
-//  pushPopListeners();
+ pushPopListeners();
 
 //Initial döljs menyhanteringsfält
   $("#admin-form .menuLinkFields").hide();
@@ -153,7 +153,7 @@ function createMenuTree(menuData) {
 //function to createHtmlMenu
 function createAdminMenuSelect(data) {
   //createMenuTree() has been moved to helpers.js
-  var menuTree = createMenuTree(menuData);
+  var menuTree = createMenuTree(data);
 
   //our #admin-form select element
   var select_html = $('<select class="form-control"/>');
