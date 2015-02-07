@@ -22,7 +22,7 @@ class Articlequery extends PDOHelper {
 
     $menu_data[":path"] = $this->saveUrl($url_path);
 
-    $this->addMenuLink($menuData);
+    $this->addMenuLink($menu_data);
 
   }
 
@@ -53,39 +53,20 @@ class Articlequery extends PDOHelper {
 
   public function addMenuLink($menu_data){
 
-    /*
-    $menu_data["parent"]["menu"] = null;
-    $menu_link[":menu_link_menu"] = $menu_name;
-    $sql = "INSERT INTO menu_links (title, path, menu, weight) VALUES (:title, :path, :menu_link_menu, :weight)";
 
-    $menu_data = array(
-      ":title" => $menu_data["title"],
-      ":path" => $url_path,
-      ":menu" => $menu_link,
-      ":weight" => $menu_data["weight"],
-      );
-
-    return $this->query($sql, $menu_data);
-  }
-
-  */
-      if (isset($menu_data)) {
-      $sql = "INSERT INTO menu_links (title, path, menu, plid, weight) VALUES (:title, :path, :menu_name, :plid, :weight)";
-      //$menu_data["parent"]["menu"] = null;
-       //$menu_data["parent"]["mlid"] = null;
-
-     //$menu_name = (isset($menu_data["parent"]["menu"]) ? $menu_data["parent"]["menu"] : null);
-     //$menu_link[":menu_link_menu"] = "menu_server_name";
+      if (isset($menuData)) {
+      $sql4 = "INSERT INTO menu_links (title, path, menu, plid, weight) VALUES (:title, :path, :menu_name, :plid, :weight)";
       $menu_data = array(
         ":title" => $menu_data["title"],
         ":path" => $url_path,
-        ":menu_name" => $menu_link["parent"]["menu"],
+        ":menu_name" => $menu_data["parent"]["menu"],
         ":plid" => $menu_data["parent"]["mlid"] ? $menu_data["parent"]["mlid"] : null,
         ":weight" => $menu_data["weight"],
       );
-      return $this->query($sql, $menu_data);
-      var_dump($sql, $menu_data);
+      $this->query($sql4, $menu_data);
     }
+
+    return true;
 
   }
 
