@@ -379,7 +379,7 @@ function saveUrl() {
 
     ":path" : $("#page_url").val()
   };
-
+ console.log("adminUrlData: ", adminUrlData);
   $.ajax ({
     url: "php/article_save.php",
     dataType: "json",

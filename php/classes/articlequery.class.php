@@ -43,32 +43,35 @@ class Articlequery extends PDOHelper {
 
     //insert new page url alias
     $sql2 = "INSERT INTO url_alias (path, pid) VALUES (:path, :pid)";
+
     $url_data = array(":path" => $url_path, ":pid" => $new_pid);
+
     return $this->query($sql2, $url_data);
 
 
   }
 
   public function addMenuLink($menu_data){
-      $menu_name = "menu-main-menu";
 
       if (isset($page_data["menuData"])) {
-      $sql = "INSERT INTO menu_links (title, path, menu, plid, weight) VALUES (:title, :path, :menu_name, :plid, :weight)";
+
+      $menu_data[":menu"] = $this->menu_name;
+
+      $sql = "INSERT INTO menu_links (title, path, plid, menu, weight) VALUES (:title, :path, :plid, :menu_name, :weight)";
+
       $menuData = array(
         ":title" => $menu_data["title"],
-        ":path" => $page_path,
-        ":menu_name" => $menu_data["parent"]["menu"],
+        ":path" => $url_path,
         ":plid" => $menu_data["parent"]["mlid"] ? $menu_data["parent"]["mlid"] : null,
+        ":menu_name" => $menu_data["parent"]["menu"],
         ":weight" => $menu_data["weight"],
       );
+
       return $this->query($sql, $menuData);
     }
    // return true;
   }
 
-  /**
-   * Menus
-   */
 
   public function getMenuNames() {
     $sql = "SELECT * FROM menus";
