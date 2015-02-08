@@ -53,7 +53,7 @@ class Articlequery extends PDOHelper {
 
   public function addMenuLink($menu_data){
 
-      if (isset($page_data["menuData"])) {
+     
 
       $menu_data[":menu"] = $this->menu_name;
 
@@ -61,16 +61,16 @@ class Articlequery extends PDOHelper {
 
       $menuData = array(
         ":title" => $menu_data["title"],
-        ":path" => $url_path,
-        ":plid" => $menu_data["parent"]["mlid"] ? $menu_data["parent"]["mlid"] : null,
-        ":menu_name" => $menu_data["parent"]["menu"],
+        ":path" => $menu_data["path"],
+        ":plid" => $menu_data["plid"],
+        ":menu_name" => $menu_data["menu_name"],
         ":weight" => $menu_data["weight"],
       );
 
       return $this->query($sql, $menuData);
     }
    // return true;
-  }
+  
 
 
   public function getMenuNames() {

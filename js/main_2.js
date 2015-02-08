@@ -1,11 +1,6 @@
 // DOM ready
 $(function() {
 
-
-
-
-
-
 //setup history push/pop-state
  pushPopListeners();
 
@@ -26,12 +21,11 @@ $(function() {
   $("#page_title").keyup(function() {
     //if #adminForm .pageUrlGroup input[type=checkbox] is !:checked
     if (!$('#admin-form .pageUrlGroup input[type=checkbox]').is(":checked")) {
-      //generage machine name on keyup using generateMachineName() 
+      //generate machine name on keyup using generateMachineName() 
       //function from helper.js
       $('#page_url').val(generateServerName($(this).val()));
     }
   });
-
 
   //adminForm page_url blur handler
   //from jQuery documentation: "The blur event is sent to an element when it loses focus"
@@ -49,24 +43,6 @@ $(function() {
     }
 
     $(".addToMenu #menu_title").attr("required", $(this).is(":checked"));
-  });
-
-
-  //adminForm page_title -> page_url keyUp handler
-  $("#page_title").keyup(function() {
-    //if #adminForm .pageUrlGroup input[type=checkbox] isnt checked.
-    if (!$('#admin-form .pageUrlGroup input[type=checkbox]').is(":checked")) {
-      //generate server name on keyup using generateServerName() 
-      $('#page_url').val(generateServerName($(this).val()));
-    }
-  });
-
-
-  //adminForm page_url blur handler
-
-  $("#page_url").blur(function() {
-
-    $(this).val(generateServerName($(this).val()));
   });
 
 
@@ -100,10 +76,6 @@ function generateServerName(urlText) {
 
   return urlText.toLowerCase();
 }
-
-
-
-
 
 
 //function to create menu tree structure
@@ -148,15 +120,13 @@ function createMenuTree(menuData) {
   return menuTree;
 }
 
-
-
 /**
  * "Add to menu" select dropdown (lives in #admin-form .menuLinkFields) 
  */
 
 //function to createHtmlMenu
 function createAdminMenuSelect(data) {
-  //createMenuTree() has been moved to helpers.js
+
   var menuTree = createMenuTree(data);
 
   //our #admin-form select element
@@ -175,8 +145,6 @@ function createAdminMenuSelect(data) {
   //finally, append the select to the admin-form
   $("#admin-form .menuSelect").html(select_html);
 }
-
-
 
 //recursive function to build all select options for a menu
 function buildSelectOptions(select_html, menuItems, level) {
@@ -206,11 +174,6 @@ function buildSelectOptions(select_html, menuItems, level) {
   return select_html;
 }
 
- //saveArticle(adminPageData);
- //console.log("adminPageData: ", adminPageData);
-
-
-
 /*
 
 //frontpage - function
@@ -234,12 +197,6 @@ function showPage(pageUrl) {
     //section shows
     pageUrl = "page";
   }
-
-  //then find any links in body pointing to the pageUrl,
-  $("body").find('a[href="'+pageUrl+'"]').each(function() {
-    //and add .active to my parent if it is an li tag
-    $(this).parent("li").addClass("active");
-  });
 }
 
 //setup push/pop-state pushPopListeners for <a> tags
@@ -281,71 +238,7 @@ function pushPopListeners() {
   }
 }
 
-
-
-
-/**
- * Menu functions
- *
- */
-
-
-/**
- * Site-wide main menu (lives in .navbar)
- */
-
-//function to build main menu and append to .navbar
-function createMainMenu(data) {
-  //createMenuTree() has been moved to helpers.js
-  var menuTree = createMenuTree(data);
-
-  //create mainMenuHtml
-  var mainMenuHtml = $('<ul class="nav navbar-nav"/>');
-  //and append all menuLinks (and their submenus) 
-  //recursively as <li> tags
-  mainMenuHtml = buildMainMenu(mainMenuHtml, menuTree);
-
-  //and finally replace .navbar menu with new html
-  $("header .navbar-collapse").find(".navbar-nav").remove();
-  $("header .navbar-collapse").prepend(mainMenuHtml);
-}
-
-
-//recursive function to build all submenus for a menuItem
-function buildMainMenu(menuHtml, menuItems) {
-  //for each menu item on this menu level
-  for (var j = 0; j < menuItems.length; j++) {
-    //create a new <li> tag
-    var menuLink;
-    if (menuItems[j].children.length < 1) {
-      //if this item has no children, only a make menuLink 
-      //("<li><a></a></li>")
-      menuLink = $('<li><a href="'+menuItems[j].path+'">'+menuItems[j].title+'</a></li>');
-    } else {
-      //if this item has children, make a menuLink and a submenu 
-      //("<li><a></a><ul></ul></li>")
-
-      //first add <li><a></a></li>
-      menuLink = $('<li class="dropdown"><a href="'+menuItems[j].path+'">'+menuItems[j].title+'</a></li>');
-      
-      //then create submenu <ul></ul>
-      var newDropDown = $('<ul class="dropdown-menu"/>');
-
-      //start this function all over again to append submenu 
-      //menuLinks to the newDropDown
-      newDropDown = buildMainMenu(newDropDown, menuItems[j].children);
-
-      //append finished dropdown to menuLink
-      menuLink.prepend(newDropDown);
-    }
-
-    //and finally append new menuLink to menuHtml
-    menuHtml.append(menuLink);
-  }
-
-  return menuHtml;
-}
-
+//submit-handler och AJAX
 
 $("#admin-form form").submit(function() {
  
@@ -435,7 +328,8 @@ function addMenuLink() {
  * Menus
  */
 
-//function to getMenuLinks.
+//function to getMenuLinks. Får Uncaught ReferenceError: getMenuLinks is not defined
+//När jag använder dom uppdelade .js-filerna (Dom som är bortkommenterade)
 function getMenuNames() {
   $.ajax({
     url: "php/get_menu_content.php",
@@ -461,62 +355,14 @@ function getMenuLinks(menu_name, successFunction) {
       //menu_name must be provided
       "menu_name": menu_name
     },
-    //on success, execute listAllMenuLinks() function in helpers.js
+    //on success, execute listAllMenuLinks() function in helpers.js  ??????
     success: successFunction,
     error: function(data) {
       console.log("getMenuLinks error: ", data.responseText);
     }
   });
   return false;
-}
-
-//function to getPages.
-function getPages(search_param) {
-  $.ajax({
-    url: "php/get_content.php",
-    type: "get",
-    dataType: "json",
-    data: {
-      //if search_param is NULL (undefined), the if-statement 
-      //in get_content.php will be false
-      "search_param": search_param
-    },
-    //on success, execute listAllPages function
-    //listAllPages has been moved to helpers.js
-    success: listAllPages,
-    error: function(data) {
-      console.log("getPages error: ", data.responseText);
-    }
-  });
-}
-
-
-//function to list the content of a single non-admin page
-//using the href (url_alias) as a unique identifier
-function getCurrentPage(href) {
-  $.ajax({
-    url: "php/get_content.php",
-    dataType: "json",
-    data: {
-      url_alias: href
-    },
-    //showPageContent() resides in pages.js
-    success: showPageContent,
-    error: function(data) {
-      console.log("getCurrentPage error: ", data.responseText);
-    }
-  });
-}
-
-
-
-
-
-
-
-
-
-
+  }
 
 });
 
