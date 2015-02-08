@@ -10,11 +10,11 @@ class Articlequery extends PDOHelper {
 
     $page_data[":user_id"] = $this->user_info["user_id"];
 
-    $menu_data = (isset($page_data["menuData"]) ? $page_data["menuData"] : null);
+   // $menu_data = (isset($page_data["menuData"]) ? $page_data["menuData"] : null);
 
     //$page_data["menuData"];
 
-    unset($page_data["menuData"]);
+    //unset($page_data["menuData"]);
 
     $sql = "INSERT INTO pages (title, content, user_id) VALUES (:title, :content, :user_id)";
 

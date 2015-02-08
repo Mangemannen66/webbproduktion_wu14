@@ -240,7 +240,7 @@ function pushPopListeners() {
 
 //submit-handler och AJAX
 
-$("#admin-form form").submit(function() {
+$("#admin-form").submit(function() {
  
     var adminPageData = {
       ":title" : $(this).find("#page_title").val(),
@@ -292,8 +292,6 @@ function saveUrl() {
 }
 
 function addMenuLink() {
-
-    //console.log("test ");
 
       //if the user has been asked to add page to menu
     if ($('.addToMenu input[type="checkbox"]').is(":checked")) {
