@@ -80,6 +80,7 @@ function generateServerName(urlText) {
   return urlText.toLowerCase();
 }
 
+//********************menyfunktioner*********************
 
 //function to create menu tree structure
 function createMenuTree(menuData) {
@@ -177,10 +178,10 @@ function buildSelectOptions(select_html, menuItems, level) {
   return select_html;
 }
 
-/*
 
-//frontpage - function
-*/
+
+//********************frontpage och pushPop
+
 
 function showPage(pageUrl) {
 
