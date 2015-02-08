@@ -29,10 +29,7 @@ class Articlequery extends PDOHelper {
   public function saveUrl($url_data){
 
     $sql = "SELECT pid FROM pages ORDER BY created DESC LIMIT 1";
-      $new_pid = $this->query($sql);
-    //extract pid from the array we get back
-    $new_pid = $new_pid[0]["pid"];
-  
+
     $new_pid = $this->query($sql);
 
     $new_pid = $new_pid[0]["pid"];
@@ -53,17 +50,16 @@ class Articlequery extends PDOHelper {
 
   public function addMenuLink($menu_data){
 
-     
-
-      $menu_data[":menu"] = $this->menu_name;
 
       $sql = "INSERT INTO menu_links (title, path, plid, menu, weight) VALUES (:title, :path, :plid, :menu_name, :weight)";
+
+      $menu_data[":menu_name"] = $this->menu_name;
 
       $menuData = array(
         ":title" => $menu_data["title"],
         ":path" => $menu_data["path"],
-        ":plid" => $menu_data["plid"],
-        ":menu_name" => $menu_data["menu_name"],
+        ":plid" => $plid,
+       // ":menu_name" => $menu_data["menu"],
         ":weight" => $menu_data["weight"],
       );
 
