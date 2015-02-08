@@ -22,6 +22,8 @@ class Articlequery extends PDOHelper {
 
     $menu_data[":path"] = $this->saveUrl($url_path);
 
+    echo "$saveUrl";
+
     $this->addMenuLink($menu_data);
 
   }
@@ -53,7 +55,8 @@ class Articlequery extends PDOHelper {
 
       $sql = "INSERT INTO menu_links (title, path, plid, menu, weight) VALUES (:title, :path, :plid, :menu, :weight)";
 
-      $menu_data[":menu"] = $this->menu_name;
+      $menu_name = "menu-main-menu";
+      $menu_name = array(":menu_name" => $this->menu_name);
 
       $menuData = array(
         ":title" => $menu_data["title"],
