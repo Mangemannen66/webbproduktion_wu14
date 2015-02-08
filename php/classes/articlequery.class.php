@@ -56,7 +56,7 @@ class Articlequery extends PDOHelper {
       $sql = "INSERT INTO menu_links (title, path, plid, menu, weight) VALUES (:title, :path, :plid, :menu, :weight)";
 
       $menu_name = "menu-main-menu";
-      $menu_name = array(":menu_name" => $this->menu_name);
+      $menu_data[":menu"] = array(":menu_name" => $this->menu_name);
 
       $menuData = array(
         ":title" => $menu_data["title"],
