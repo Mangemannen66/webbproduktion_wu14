@@ -292,7 +292,7 @@ function addMenuLink() {
     if ($('.addToMenu input[type="checkbox"]').is(":checked")) {
       //Plocka Parent-Data
       var menuData = {
-      "parent": {mlid:null, menu:"menu-main-menu"},
+      "parent": $('.addToMenu select').find(":selected").data("menuItem"),
       //Plocka titel
       "title": $(".addToMenu #menu_title").val(),
       "path": $("#page_url").val(),
