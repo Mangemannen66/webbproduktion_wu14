@@ -23,10 +23,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Tabellstruktur `footer`
+-- Tabellstruktur `footer_info`
 --
 
-CREATE TABLE IF NOT EXISTS `footer` (
+CREATE TABLE IF NOT EXISTS `footer_info` (
   `name` varchar(255) DEFAULT NULL,
   `street` varchar(255) DEFAULT NULL,
   `postalcode` int(11) DEFAULT NULL,
