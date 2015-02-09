@@ -289,13 +289,16 @@ function addMenuLink() {
       //if the user has been asked to add page to menu
     if ($('.addToMenu input[type="checkbox"]').is(":checked")) {
       //get selected menu parent data
-      var menuData = {};
-      menuData["parent"] = $('.addToMenu select').find(":selected").data("menuItem");
+      var menuData = {
+      "parent": $('.addToMenu select').find(":selected").data("menuItem"),
       //get menu link title
-      menuData["title"] = $('.addToMenu #menu_title').val();
+      "title": $('.addToMenu #menu_title').val(),
       //get menu link order
-      menuData["weight"] = $('.addToMenu #menu_weight').val();
+      "weight": $('.addToMenu #menu_weight').val(),
+      };
     };
+
+
     console.log("menuData: ", menuData);
   $.ajax ({
       url: "php/article_save.php",
