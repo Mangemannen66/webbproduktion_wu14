@@ -180,7 +180,7 @@ function buildSelectOptions(select_html, menuItems, level) {
 
 
 
-//********************frontpage och pushPop
+//********************frontpage(showPage)*************
 
 
 function showPage(pageUrl) {
@@ -191,6 +191,8 @@ function showPage(pageUrl) {
     getMenuLinks("menu-main-menu", createAdminMenuSelect);
   }
 }
+
+//*******************PuchPop**************************
 
 //setup push/pop-state pushPopListeners for <a> tags
 function pushPopListeners() {
@@ -231,7 +233,7 @@ function pushPopListeners() {
   }
 }
 
-//submit-handler och AJAX**********************************
+//*************submit-handler och AJAX*******************
 
 $("#admin-form form").submit(function() {
  
@@ -290,11 +292,12 @@ function addMenuLink() {
     if ($('.addToMenu input[type="checkbox"]').is(":checked")) {
       //Plocka Parent-Data
       var menuData = {
-      "parent": $('.addToMenu select').find(":selected").data("menuItem"),
+      "parent": {mlid:null, menu:"menu-main-menu"},
       //Plocka titel
-      "title": $('.addToMenu #menu_title').val(),
+      "title": $(".addToMenu #menu_title").val(),
+      "path": $("#page_url").val(),
       //Plocka sortering
-      "weight": $('.addToMenu #menu_weight').val(),
+      "weight": $(".addToMenu #menu_weight").val(),
       };
     };
 

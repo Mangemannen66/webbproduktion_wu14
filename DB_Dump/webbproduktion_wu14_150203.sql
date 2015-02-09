@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
   KEY `user_id` (`user_id`),
   KEY `img_id` (`img_id`),
   KEY `video_id` (`video_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `url_alias` (
   PRIMARY KEY (`alias_id`),
   UNIQUE KEY `alias_id` (`alias_id`),
   KEY `pid` (`pid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 
