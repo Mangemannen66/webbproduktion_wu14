@@ -10,19 +10,10 @@ class Articlequery extends PDOHelper {
 
     $page_data[":user_id"] = $this->user_info["user_id"];
 
-   // $menuData = (isset($page_data["menuData"]) ? $page_data["menuData"] : null);
-
-    //$page_data["menuData"];
-
-    //unset($page_data["menuData"]);
-
     $sql = "INSERT INTO pages (title, content, user_id) VALUES (:title, :content, :user_id)";
 
     return $this->query($sql, $page_data);
 
-   // $menuData[":path"] = $this->saveUrl($url_path);
-
-    //$this->addMenuLink($menuData);
 
   }
 
@@ -47,36 +38,35 @@ class Articlequery extends PDOHelper {
       );
 
     return $this->query($sql2, $url_data);
-
+    $url_data[":path"] = $this->addMenuLink($url_path);
 
   }
 
-  public function addMenuLink($menuData){
+  public function addMenuLink($menu_data){
 
-    $sql = "SELECT pid FROM url_alias ORDER BY created DESC LIMIT 1";
-    $new_pid = $this->query($sql);
-    //extract pid from the array we get back
-    $new_pid = $new_pid[0]["pid"];
-     
-      //definiera menyn som menu-main-menu
-      $menuData[":menu_name"] = "menu-main-menu";
-      //$menuData["menu-main-menu"] = $this->menu;
-      //Kolla om parent-link-id är NULL eller inte
-      $menuData["plid"] = (isset($menuData["plid"]) ? $menuData["plid"] : null);
+      $menu_data["menu-main-menu"] = $this->menu;
+      //Kolla om menu-link-id är NULL eller inte
+     // $menu_data["mlid"] = (isset($menu_data["mlid"]) ? $menu_data["mlid"] : null);
+    
+      //$menu_data["parent"] = (isset($menu_data["plid"]) ? $menu_data["plid"] : null);
+    
 
 
-      $sql2 = "INSERT INTO menu_links (title, path, plid, menu, weight) VALUES (:title, :path, :plid, :menu_name, :weight)";
+    
+      $sql = "INSERT INTO menu_links (title, path, menu, plid, weight) VALUES (:title, :path, :menu_name, :plid, :weight)";
 
-      $menuData = array(
-        ":title" => $menuData["title"],
-        ":path" => $menuData["path"],
-        ":plid" => $menuData["plid"],
-        ":menu_name" => $menuData["menu"],
-        ":weight" => $menuData["weight"],
+      $menu_data = array(
+        ":title" => $menu_data["title"],
+        ":path" => $url_path,
+        ":menu_name" => $menu_data["parent"]["menu"],
+        ":plid" => $menu_data["parent"]["mlid"],
+        ":weight" => $menu_data["weight"],
       );
 
-      return $this->query($sql2, $menuData);
+      return $this->query($sql, $menu_data);
     }
+  
+  
    // return true;
   
 
