@@ -10,7 +10,7 @@ class Articlequery extends PDOHelper {
 
     $page_data[":user_id"] = $this->user_info["user_id"];
 
-   // $menu_data = (isset($page_data["menuData"]) ? $page_data["menuData"] : null);
+   // $menuData = (isset($page_data["menuData"]) ? $page_data["menuData"] : null);
 
     //$page_data["menuData"];
 
@@ -20,11 +20,9 @@ class Articlequery extends PDOHelper {
 
     return $this->query($sql, $page_data);
 
-    $menu_data[":path"] = $this->saveUrl($url_path);
+   // $menuData[":path"] = $this->saveUrl($url_path);
 
-    echo "$saveUrl";
-
-    $this->addMenuLink($menu_data);
+    //$this->addMenuLink($menuData);
 
   }
 
@@ -51,19 +49,21 @@ class Articlequery extends PDOHelper {
   }
 
   public function addMenuLink($menuData){
-
+     
 
       $sql = "INSERT INTO menu_links (title, path, plid, menu, weight) VALUES (:title, :path, :plid, :menu_name, :weight)";
+      $menuData[":menu_name"] = "menu-main-menu";
+      //$menuData["menu-main-menu"] = $this->menu;
 
-      $menu_name = "menu-main-menu";
-      $menu_data[":menu_name"] = array(":menu_name" => $this->menu_data["menu"]);
+     $menuData = (isset($menuData["plid"]) ? $menuData["plid"] : null);
+
 
       $menuData = array(
-        ":title" => $menu_data["title"],
-        ":path" => $menu_data["path"],
-        ":plid" => $menu_data["plid"],
-        ":menu_name" => $menu_data["menu"],
-        ":weight" => $menu_data["weight"],
+        ":title" => $menuData["title"],
+        ":path" => $menuData["path"],
+        ":plid" => $menuData["plid"],
+        ":menu_name" => $menuData["menu"],
+        ":weight" => $menuData["weight"],
       );
 
       return $this->query($sql, $menuData);
