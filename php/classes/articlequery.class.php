@@ -44,7 +44,7 @@ class Articlequery extends PDOHelper {
 
   public function addMenuLink($menu_data){
 
-      $menu_data["menu-main-menu"] = $this->menu;
+      $menu_data["menu-main-menu"] = $this->$menu_data["menu_name"];
       //Kolla om menu-link-id är NULL eller inte
      // $menu_data["mlid"] = (isset($menu_data["mlid"]) ? $menu_data["mlid"] : null);
     
@@ -65,7 +65,7 @@ class Articlequery extends PDOHelper {
 
       return $this->query($sql, $menu_data);
     }
-  
+
   
    // return true;
   
