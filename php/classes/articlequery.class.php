@@ -41,7 +41,10 @@ class Articlequery extends PDOHelper {
     //insert new page url alias
     $sql2 = "INSERT INTO url_alias (path, pid) VALUES (:path, :pid)";
 
-    $url_data = array(":path" => $url_path, ":pid" => $new_pid);
+    $url_data = array(
+      ":path" => $url_path,
+      ":pid" => $new_pid
+      );
 
     return $this->query($sql2, $url_data);
 
@@ -49,15 +52,20 @@ class Articlequery extends PDOHelper {
   }
 
   public function addMenuLink($menuData){
+
+    $sql = "SELECT pid FROM url_alias ORDER BY created DESC LIMIT 1";
+    $new_pid = $this->query($sql);
+    //extract pid from the array we get back
+    $new_pid = $new_pid[0]["pid"];
      
       //definiera menyn som menu-main-menu
       $menuData[":menu_name"] = "menu-main-menu";
       //$menuData["menu-main-menu"] = $this->menu;
       //Kolla om parent-link-id är NULL eller inte
-      $menuData = (isset($menuData["plid"]) ? $menuData["plid"] : null);
+      $menuData["plid"] = (isset($menuData["plid"]) ? $menuData["plid"] : null);
 
 
-      $sql = "INSERT INTO menu_links (title, path, plid, menu, weight) VALUES (:title, :path, :plid, :menu_name, :weight)";
+      $sql2 = "INSERT INTO menu_links (title, path, plid, menu, weight) VALUES (:title, :path, :plid, :menu_name, :weight)";
 
       $menuData = array(
         ":title" => $menuData["title"],
@@ -67,7 +75,7 @@ class Articlequery extends PDOHelper {
         ":weight" => $menuData["weight"],
       );
 
-      return $this->query($sql, $menuData);
+      return $this->query($sql2, $menuData);
     }
    // return true;
   
