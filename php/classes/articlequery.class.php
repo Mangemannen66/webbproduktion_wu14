@@ -50,13 +50,14 @@ class Articlequery extends PDOHelper {
 
   public function addMenuLink($menuData){
      
-
-      $sql = "INSERT INTO menu_links (title, path, plid, menu, weight) VALUES (:title, :path, :plid, :menu_name, :weight)";
+      //definiera menyn som menu-main-menu
       $menuData[":menu_name"] = "menu-main-menu";
       //$menuData["menu-main-menu"] = $this->menu;
+      //Kolla om parent-link-id är NULL eller inte
+      $menuData = (isset($menuData["plid"]) ? $menuData["plid"] : null);
 
-     $menuData = (isset($menuData["plid"]) ? $menuData["plid"] : null);
 
+      $sql = "INSERT INTO menu_links (title, path, plid, menu, weight) VALUES (:title, :path, :plid, :menu_name, :weight)";
 
       $menuData = array(
         ":title" => $menuData["title"],

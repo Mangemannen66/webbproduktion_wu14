@@ -286,14 +286,14 @@ function saveUrl() {
 
 function addMenuLink() {
 
-      //if the user has been asked to add page to menu
+      //Om "Lägg till i menyn" är checkad
     if ($('.addToMenu input[type="checkbox"]').is(":checked")) {
-      //get selected menu parent data
+      //Plocka Parent-Data
       var menuData = {
       "parent": $('.addToMenu select').find(":selected").data("menuItem"),
-      //get menu link title
+      //Plocka titel
       "title": $('.addToMenu #menu_title').val(),
-      //get menu link order
+      //Plocka sortering
       "weight": $('.addToMenu #menu_weight').val(),
       };
     };
