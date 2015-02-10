@@ -1,4 +1,4 @@
-// DOM ready
+  // DOM ready
 $(function() {
 
 //setup history push/pop-state
@@ -180,16 +180,34 @@ function buildSelectOptions(select_html, menuItems, level) {
 
 
 
-//********************frontpage(showPage)*************
+//********************frontpage(show and hide)*************
 
 
 function showPage(pageUrl) {
 
   if (pageUrl == "admin-form") {
    //hide "Add to menu" fields initially
-   // $("#admin-form .menuLinkFields").hide();
+    $("#article-list").hide();
+    $("#admin-form").show();
     getMenuLinks("menu-main-menu", createAdminMenuSelect);
   }
+  if (pageUrl == "article-list") {
+   //hide "Add to menu" fields initially
+    $("#admin-form").hide();
+    $("#article-list").show();
+    //getMenuLinks("menu-main-menu", createAdminMenuSelect);
+  }
+}
+
+
+//go to "page" function
+function goTo(href) {
+  // Show a "page" in a section with the id corresponding
+  // to the link's href value
+  showPage(href);
+
+  // Add the current "state/page" to our history of visited pages
+  history.pushState(null,null,href);
 }
 
 //*******************PuchPop**************************
@@ -214,21 +232,19 @@ function pushPopListeners() {
   });
 
 
-  addEventListener("popstate",onPopAndStart);
+  addEventListener("popstate",popUpTheDOM);
 
-  onPopAndStart();
+  popUpTheDOM();
 
 
-  function onPopAndStart(){
+  function popUpTheDOM(){
 
     var l = location.href;
-    //might need to change this
     var pageName = l.substring(l.lastIndexOf("/")+1);
 
-    // if no pageName set pageName to false
     pageName = pageName || false;
     console.log("pageName: ", pageName);
-    //and showPage
+    
     showPage(pageName);
   }
 }

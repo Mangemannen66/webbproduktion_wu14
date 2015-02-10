@@ -30,7 +30,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-      	 <a class="navbar-brand" href="admin-form">Admin</a>
+      	 <a class="navbar-brand" href="article-list">Lista Artiklar</a>
+         <a class="navbar-brand" href="admin-form">Admin Formulär</a>
       </div>
 <div class="collapse navbar-collapse" id="md-navbar-collapse"></div>
     </nav>
@@ -38,9 +39,34 @@
   </header>
   <!--MainContainer-->
   <main class="container">
-      <div class="page-header">	
-    <h2>MAGASINET - Administrering</h2>
-    </div>
+    <section class="row">
+      <h2>MAGASINET - Administrering</h2>
+
+
+    <!--För visning av enskild artikel-->
+    <section id="article" class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+    </section>
+    <section id="article-list" class="col-sm-offset-2 col-xs-12 col-sm-12 col-md-12 col-lg-10">
+       <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Alla Artiklar</h3>
+            </div>
+            <!-- listing of content using a table -->
+            <!-- .table is a bootstrap class -->
+            <table class="table">
+              <tr class="pageTableHeads">
+                <!-- traditional table heads -->
+                <th>Artikel-id:</th>
+                <th>Titel:</th>
+                <th>Författare:</th>
+                <th>Skapad:</th>
+                <th><a href="#"><span class="label label-warning">Editera</span></a></th>
+                <th><a href="#"><span class="label label-danger">Ta bort</span></a></th>
+              </tr>
+            </table>
+        </div>
+    </section>
+
     <section id="admin-form" class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
 
     <form class="form-horizontal">
@@ -96,22 +122,21 @@
     </form>         
     </section>
     </main> 
+  </section>
     <footer class="footer">
-      <section id="footer-info" class="col-xs-offset-0 col-sm-offset-1 col-lg-offset-2 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <section id="footer-info" class="col-xs-offset-0 col-sm-offset-1 col-lg-offset-2 col-xs-12 col-sm-12 col-md-12 col-lg-8">
         <div class="container">
-      	<p class="text-muted">
-        <div>
-          <span  class="footer-info">Företag</span>
-          <span  class="footer-info">Adress</span>
-          <span  class="footer-info">postnummer</span>
-          <span  class="footer-info">Stad</span>
-          <span  class="footer-info">Telefon</span>
-          <span  class="footer-info">Email</span>
-          <span  class="footer-info">Info.......</span>
-
-        </div>
-        </p>
-        </p>
+        	<p class="text-muted">
+            <div>
+              <span  class="footer-info">Företag</span>
+              <span  class="footer-info">Adress</span>
+              <span  class="footer-info">postnummer</span>
+              <span  class="footer-info">Stad</span>
+              <span  class="footer-info">Telefon</span>
+              <span  class="footer-info">Email</span>
+              <span  class="footer-info">Info.......</span>
+            </div>
+          </p>
         </div>
       </section>
     </footer>
