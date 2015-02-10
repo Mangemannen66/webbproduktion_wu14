@@ -5,6 +5,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+main {
+  display: block;
+}
 .footer {
   position: fixed;
   bottom: 0;

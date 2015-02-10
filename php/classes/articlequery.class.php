@@ -1,6 +1,6 @@
 <?php
 
-class Articlequery extends PDOHelper {	
+class ArticleQuery extends PDOHelper {	
 
   protected $user_info = array("user_id" => 1);
   protected $menu_name = "menu-main-menu";
