@@ -313,12 +313,16 @@ function addMenuLink() {
 
       success : function(data) {
         console.log("addMenu success: ", data);
+        
       },
       errror : function(data) {
         console.log("addMenu error: ", data);
       }
+
   });
+
   return false;
+   
 }
 
 /**
