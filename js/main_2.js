@@ -1,6 +1,13 @@
   // DOM ready
 $(function() {
 
+
+    $('.navbar-header li').click(function(){
+    $("main .row").children().not(".control").hide();
+    $(' .navbar-header li').addClass('active').not(this).removeClass('active');
+  });
+
+
 //setup history push/pop-state
  pushPopListeners();
 
@@ -187,15 +194,15 @@ function showPage(pageUrl) {
 
   if (pageUrl == "admin-form") {
    //hide "Add to menu" fields initially
-    $("#article-list").hide();
     $("#admin-form").show();
+    $("#content-list").hide();
     getMenuLinks("menu-main-menu", createAdminMenuSelect);
   }
-  if (pageUrl == "article-list") {
-   //hide "Add to menu" fields initially
+  if (pageUrl == "content-list") {
+ 
+    $("#content-list").show();
     $("#admin-form").hide();
-    $("#article-list").show();
-    //getMenuLinks("menu-main-menu", createAdminMenuSelect);
+    
   }
 }
 
@@ -253,6 +260,7 @@ function pushPopListeners() {
 
 $("#admin-form form").submit(function() {
  
+
     var adminPageData = {
       ":title" : $(this).find("#page_title").val(),
       ":content" : $(this).find("#page_content").val(),
@@ -381,6 +389,58 @@ function getMenuLinks(menu_name, successFunction) {
   return false;
   }
 
+  $('.content-list-button').click(function(){
+
+    $('#content-list').show();
+    $('#admin-form').hide();
+    getAllContent();
+
+
+
+function getAllContent() {
+
+    $.ajax ({
+      url: "php/get_all_content.php",
+      dataType: "json",
+      data: {
+          "get_all" : 1
+
+      },
+
+      success : function(data) {
+        console.log("get_all" , data);
+     $("#content-list table tr").not(".pageTableHeads").remove();
+
+     for (i = 0; i < data.length; i++) {
+         var contentRowData = $("<tr/>");
+             contentRowData.data("contentData", data[i]);
+
+             contentRowData.append('<td><span class="badge">'+data[i].pid+"</span></td>");
+             contentRowData.append('<td><strong>'+data[i].pageTitle+"</strong></td>");
+             contentRowData.append('<td>'+data[i].author+"</td>");
+             contentRowData.append('<td>'+data[i].path+"</td>");
+             contentRowData.append('<td>'+data[i].created+"</td>");
+             contentRowData.append('<td><a href="#"><span class="label label-warning">Editera</span></a></td>');
+             contentRowData.append('<td><a href="#"><span class="label label-danger">Ta bort</span></a></td>');
+      
+        //then append contentRowData to the #content-list table
+        $("#content-list table").append(contentRowData);
+        }
+
+  },
+          error : function(data) {
+           console.log("get_all error", data.responseText);
+         }
+   });
+   return false;
+  }
+});
+  $('.admin-form-button').click(function(){
+
+    $('#admin-form').show();
+    $('#content-list').hide();
+
+ });
 });
 
 

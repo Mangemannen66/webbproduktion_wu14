@@ -19,57 +19,57 @@
 <!--HeaderContainer-->
   <header class="container">
   <section class="row">
- 
-  	
       <nav class="navbar navbar-default navbar-fixed-top">
         <div class="navbar-header">
-              <!-- mobile menu button, -->
+              <!-- mobile menu buttons-->
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#md-navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-      	 <a class="navbar-brand" href="article-list">Lista Artiklar</a>
-         <a class="navbar-brand" href="admin-form">Admin Formulär</a>
+        <ul class="nav">
+        <li class="active content-list-button"><a href="content-list">Lista Artiklar</a></li>
+         <li class="admin-form-button"><a href="admin-form">Admin Formulär</a></li>
+         </ul>
       </div>
-<div class="collapse navbar-collapse" id="md-navbar-collapse"></div>
+<div class="collapse navbar-collapse" id="md-navbar-collapse">
+  
+          
+</div>
     </nav>
 
-   <div class="banner col-sm-offset-2 col-xs-12 col-sm-12 col-md-12 col-lg-10"> <h2>MAGASINET - Administrering</h2></div>
+   <div class="banner col-sm-offset-2 col-xs-12 col-sm-12 col-md-10 col-lg-10"> <h2>MAGASINET - Administrering</h2></div>
   </section>
   </header>
   <!--MainContainer-->
   <main class="container">
     <section class="row">
-      
-
 
     <!--För visning av enskild artikel-->
-    <section id="article" class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+    <section id="article" class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
     </section>
-    <section id="article-list" class="col-sm-offset-2 col-xs-12 col-sm-12 col-md-12 col-lg-10">
+    <section id="content-list" class="col-sm-offset-2 col-xs-12 col-sm-10 col-md-10 col-lg-10">
        <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">Alla Artiklar</h3>
             </div>
-            <!-- listing of content using a table -->
-            <!-- .table is a bootstrap class -->
-            <table class="table">
-              <tr class="pageTableHeads">
-                <!-- traditional table heads -->
-                <th>Artikel-id:</th>
-                <th>Titel:</th>
-                <th>Författare:</th>
-                <th>Skapad:</th>
-                <th><a href="#"><span class="label label-warning">Editera</span></a></th>
-                <th><a href="#"><span class="label label-danger">Ta bort</span></a></th>
-              </tr>
-            </table>
+              <table class="table">
+                <tr class="pageTableHeads">
+                  <!-- traditional table heads -->
+                  <th>ID:</th>
+                  <th>Rubrik:</th>
+                  <th>Skapad av:</th>
+                  <th>URL:</th>
+                  <th>Datum:</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </table>
         </div>
     </section>
 
-    <section id="admin-form" class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+    <section id="admin-form" class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
 
     <form class="form-horizontal">
       <div class="form-group">
@@ -79,7 +79,7 @@
       	</div>
       </div>
       <div class="form-group">
-        <label class="col-sm-4 control-label" for="page_url">Sidans URL-adress:</label>
+        <label class="col-sm-4 control-label" for="page_url">Alias:</label>
         <div class="col-sm-8">
           <div class="input-group pageUrlGroup">
             <span class="input-group-addon">

@@ -28,3 +28,6 @@ body > .container {
 .footer-info {
   padding-right: 35px;
 }
+textarea {
+  resize: none;
+}

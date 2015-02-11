@@ -6,13 +6,13 @@ class ArticleQuery extends PDOHelper {
   protected $menu_name = "menu-main-menu";
  
 
-    public function saveArticle($page_data) {
+  public function saveArticle($page_data) {
 
-    $page_data[":user_id"] = $this->user_info["user_id"];
+  $page_data[":user_id"] = $this->user_info["user_id"];
+  
+  $sql = "INSERT INTO pages (title, content, user_id) VALUES (:title, :content, :user_id)";
 
-    $sql = "INSERT INTO pages (title, content, user_id) VALUES (:title, :content, :user_id)";
-
-    return $this->query($sql, $page_data);
+  return $this->query($sql, $page_data);
 
 
   }
@@ -44,24 +44,32 @@ class ArticleQuery extends PDOHelper {
 
   public function addMenuLink($menu_data){
 
- 
+    $sql = "INSERT INTO menu_links (title, path, menu, plid, weight) VALUES (:title, :path, :menu_name, :plid, :weight)";
 
-      $sql = "INSERT INTO menu_links (title, path, menu, plid, weight) VALUES (:title, :path, :menu_name, :plid, :weight)";
-
-      $menu_data = array(
-        ":title" => $menu_data["title"],
-        ":path" => $menu_data["path"],
-        ":menu_name" => $menu_data["parent"]["menu"],
-        ":plid" => $menu_data["parent"]["mlid"] ? $menu_data["parent"]["mlid"] : null,
-        ":weight" => $menu_data["weight"],
+    $menu_data = array(
+      ":title" => $menu_data["title"],
+      ":path" => $menu_data["path"],
+      ":menu_name" => $menu_data["parent"]["menu"],
+      ":plid" => $menu_data["parent"]["mlid"] ? $menu_data["parent"]["mlid"] : null,
+      ":weight" => $menu_data["weight"],
       );
 
       return $this->query($sql, $menu_data);
     }
 
+  public function getAllArticles(){
+
+    $sql = "SELECT pages.pid, pages.title AS pageTitle, CONCAT(users.fname,' ', users.lname) AS author, url_alias.path, pages.created
+    FROM pages, users, url_alias
+    WHERE pages.pid = url_alias.pid ";
+
+
+    return $this->query($sql);  
+
+  }
   
-   // return true;
-  
+
+
 
 
   public function getMenuNames() {
