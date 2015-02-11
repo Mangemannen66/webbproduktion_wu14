@@ -246,9 +246,13 @@ function pushPopListeners() {
 
   function popUpTheDOM(){
 
-  var l = location.href;
-      var pageName = l.substring(l.lastIndexOf("/")+1);
-      pageName = pageName || "content-list";
+    var l = location.href;
+    var pageName = l.substring(l.lastIndexOf("/")+1);
+
+    pageName = pageName || false;
+    console.log("pageName: ", pageName);
+    
+    showPage(pageName);
   }
 }
 
@@ -272,7 +276,7 @@ $("#admin-form form").submit(function() {
     },
     success: function(data) {
       saveUrl();
-   	  console.log("saveArticle success: ", data);
+      console.log("saveArticle success: ", data);
     },
     error: function(data) {
       console.log("saveArticle error: ", data);
@@ -414,7 +418,7 @@ function getAllContent() {
              contentRowData.append('<td><span class="badge">'+data[i].pid+"</span></td>");
              contentRowData.append('<td><strong>'+data[i].pageTitle+"</strong></td>");
              contentRowData.append('<td>'+data[i].author+"</td>");
-             contentRowData.append('<td>'+data[i].title+"</td>");
+             contentRowData.append('<td>'+data[i].title+"</td>");             
              contentRowData.append('<td>'+data[i].path+"</td>");
              contentRowData.append('<td>'+data[i].created+"</td>");
              contentRowData.append('<td><a href="#"><span class="label label-warning">Editera</span></a></td>');
@@ -424,20 +428,20 @@ function getAllContent() {
         $("#content-list table").append(contentRowData);
         }
 
-         },
+  },
           error : function(data) {
            console.log("get_all error", data.responseText);
          }
-       });
-       return false;
-      }
-    });
-      $('.admin-form-button').click(function(){
+   });
+   return false;
+  }
+});
+  $('.admin-form-button').click(function(){
 
-        $('#admin-form').show();
-        $('#content-list').hide();
+    $('#admin-form').show();
+    $('#content-list').hide();
 
-     });
+ });
 });
 
 
