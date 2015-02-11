@@ -204,17 +204,7 @@ function showPage(pageUrl) {
     $("#admin-form").hide();
     
   }
-}
 
-
-//go to "page" function
-function goTo(href) {
-  // Show a "page" in a section with the id corresponding
-  // to the link's href value
-  showPage(href);
-
-  // Add the current "state/page" to our history of visited pages
-  history.pushState(null,null,href);
 }
 
 //*******************PuchPop**************************
@@ -224,18 +214,11 @@ function pushPopListeners() {
   // When we click a link
   $(document).on("click","a",function(event){
 
-    //if the user clicks a real http:// || https:// link,
-    if ($(this).attr("href").indexOf("://") >=0) {
-      //assume they are leaving the site
-      return;
-    }
-
-    //prevent "empty" urls from affecting browsing
-    if ($(this).attr("href") && $(this).attr("href") !== "#") {
-      goTo($(this).attr("href"));
-    }
-
-    event.preventDefault();
+     event.preventDefault();
+      var yourHref = $(this).attr('href');
+      $('.'+yourHref).show();
+      console.log("yourHref: ",yourHref);
+      history.pushState(null,null,yourHref);
   });
 
 
