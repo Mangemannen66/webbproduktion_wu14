@@ -204,7 +204,17 @@ function showPage(pageUrl) {
     $("#admin-form").hide();
     
   }
+}
 
+
+//go to "page" function
+function goTo(href) {
+  // Show a "page" in a section with the id corresponding
+  // to the link's href value
+  showPage(href);
+
+  // Add the current "state/page" to our history of visited pages
+  history.pushState(null,null,href);
 }
 
 //*******************PuchPop**************************
@@ -214,11 +224,18 @@ function pushPopListeners() {
   // When we click a link
   $(document).on("click","a",function(event){
 
-     event.preventDefault();
-      var yourHref = $(this).attr('href');
-      $('.'+yourHref).show();
-      console.log("yourHref: ",yourHref);
-      history.pushState(null,null,yourHref);
+    //if the user clicks a real http:// || https:// link,
+    if ($(this).attr("href").indexOf("://") >=0) {
+      //assume they are leaving the site
+      return;
+    }
+
+    //prevent "empty" urls from affecting browsing
+    if ($(this).attr("href") && $(this).attr("href") !== "#") {
+      goTo($(this).attr("href"));
+    }
+
+    event.preventDefault();
   });
 
 
@@ -229,13 +246,9 @@ function pushPopListeners() {
 
   function popUpTheDOM(){
 
-    var l = location.href;
-    var pageName = l.substring(l.lastIndexOf("/")+1);
-
-    pageName = pageName || false;
-    console.log("pageName: ", pageName);
-    
-    showPage(pageName);
+  var l = location.href;
+      var pageName = l.substring(l.lastIndexOf("/")+1);
+      pageName = pageName || "content-list";
   }
 }
 
@@ -401,6 +414,7 @@ function getAllContent() {
              contentRowData.append('<td><span class="badge">'+data[i].pid+"</span></td>");
              contentRowData.append('<td><strong>'+data[i].pageTitle+"</strong></td>");
              contentRowData.append('<td>'+data[i].author+"</td>");
+             contentRowData.append('<td>'+data[i].title+"</td>");
              contentRowData.append('<td>'+data[i].path+"</td>");
              contentRowData.append('<td>'+data[i].created+"</td>");
              contentRowData.append('<td><a href="#"><span class="label label-warning">Editera</span></a></td>');
@@ -410,20 +424,20 @@ function getAllContent() {
         $("#content-list table").append(contentRowData);
         }
 
-  },
+         },
           error : function(data) {
            console.log("get_all error", data.responseText);
          }
-   });
-   return false;
-  }
-});
-  $('.admin-form-button').click(function(){
+       });
+       return false;
+      }
+    });
+      $('.admin-form-button').click(function(){
 
-    $('#admin-form').show();
-    $('#content-list').hide();
+        $('#admin-form').show();
+        $('#content-list').hide();
 
- });
+     });
 });
 
 

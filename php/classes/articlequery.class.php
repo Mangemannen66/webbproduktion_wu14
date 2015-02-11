@@ -9,7 +9,7 @@ class ArticleQuery extends PDOHelper {
   public function saveArticle($page_data) {
 
   $page_data[":user_id"] = $this->user_info["user_id"];
-  
+
   $sql = "INSERT INTO pages (title, content, user_id) VALUES (:title, :content, :user_id)";
 
   return $this->query($sql, $page_data);
@@ -59,9 +59,9 @@ class ArticleQuery extends PDOHelper {
 
   public function getAllArticles(){
 
-    $sql = "SELECT pages.pid, pages.title AS pageTitle, CONCAT(users.fname,' ', users.lname) AS author, url_alias.path, pages.created
-    FROM pages, users, url_alias
-    WHERE pages.pid = url_alias.pid ";
+    $sql = "SELECT pages.pid, pages.title AS pageTitle, CONCAT(users.fname,' ', users.lname) AS author, menu_links.title, url_alias.path, pages.created
+    FROM pages, users, menu_links, url_alias
+    WHERE pages.pid = url_alias.pid  AND url_alias.path = menu_links.path";
 
 
     return $this->query($sql);  
