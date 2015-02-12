@@ -1,7 +1,6 @@
   // DOM ready
 $(function() {
 
-
     $('.navbar-header li').click(function(){
     $("main .row").children().not(".control").hide();
     $(' .navbar-header li').addClass('active').not(this).removeClass('active');
