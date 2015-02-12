@@ -321,7 +321,7 @@ function addMenuLink() {
     };
 
 
-    console.log("menuData: ", menuData);
+    console.log("menuData: ", menuData); //Loggar menuData
   $.ajax ({
       url: "php/article_save.php",
       dataType: "json",
@@ -331,7 +331,7 @@ function addMenuLink() {
       },
 
       success : function(data) {
-        console.log("addMenu success: ", data);
+        console.log("addMenu success: ", data); //Loggar om menuData sparas
         
       },
       errror : function(data) {
@@ -348,14 +348,13 @@ function addMenuLink() {
  * Menus
  */
 
-//function to getMenuLinks. Får Uncaught ReferenceError: getMenuLinks is not defined
-//När jag använder dom uppdelade .js-filerna (Dom som är bortkommenterade)
+//function to getMenuLinks. 
 function getMenuNames() {
   $.ajax({
     url: "php/get_menu_content.php",
     type: "get",
     dataType: "json",
-    //on success, execute listMenuNames() function in helpers.js
+ 
     success: listMenuNames,
     error: function(data) {
       console.log("getMenuLinks error: ", data.responseText);
@@ -372,10 +371,10 @@ function getMenuLinks(menu_name, successFunction) {
     type: "get",
     dataType: "json",
     data: {
-      //menu_name must be provided
+      //menu_name måste vara med
       "menu_name": menu_name
     },
-    //on success, execute listAllMenuLinks() function in helpers.js  ??????
+
     success: successFunction,
     error: function(data) {
       console.log("getMenuLinks error: ", data.responseText);
