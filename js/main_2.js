@@ -198,12 +198,7 @@ function showPage(pageUrl) {
     $("#content-list").hide();
     getMenuLinks("menu-main-menu", createAdminMenuSelect);
   }
-  if (pageUrl == "content-list") {
- 
-    $("#content-list").show();
-    $("#admin-form").hide();
-    
-  }
+
 }
 
 
@@ -389,6 +384,9 @@ function getMenuLinks(menu_name, successFunction) {
   return false;
   }
 
+
+
+
   $('.content-list-button').click(function(){
 
     $('#content-list').show();
@@ -407,41 +405,41 @@ function getAllContent() {
 
       },
 
-      success : function(data) {
-        console.log("get_all" , data);
-     $("#content-list table tr").not(".pageTableHeads").remove();
+        success : function(data) {
+          console.log("get_all" , data);
+       $("#content-list table tr").not(".pageTableHeads").remove();
 
-     for (i = 0; i < data.length; i++) {
-         var contentRowData = $("<tr/>");
-             contentRowData.data("contentData", data[i]);
+       for (i = 0; i < data.length; i++) {
+           var contentRowData = $("<tr/>");
+               contentRowData.data("contentData", data[i]);
 
-             contentRowData.append('<td><span class="badge">'+data[i].pid+"</span></td>");
-             contentRowData.append('<td><strong>'+data[i].pageTitle+"</strong></td>");
-             contentRowData.append('<td>'+data[i].author+"</td>");
-             contentRowData.append('<td>'+data[i].title+"</td>");             
-             contentRowData.append('<td>'+data[i].path+"</td>");
-             contentRowData.append('<td>'+data[i].created+"</td>");
-             contentRowData.append('<td><a href="#"><span class="label label-warning">Editera</span></a></td>');
-             contentRowData.append('<td><a href="#"><span class="label label-danger">Ta bort</span></a></td>');
-      
-        //then append contentRowData to the #content-list table
-        $("#content-list table").append(contentRowData);
-        }
+               contentRowData.append('<td><span class="badge">'+data[i].pid+"</span></td>");
+               contentRowData.append('<td><strong>'+data[i].pageTitle+"</strong></td>");
+               contentRowData.append('<td>'+data[i].author+"</td>");
+               contentRowData.append('<td>'+data[i].title+"</td>");             
+               contentRowData.append('<td>'+data[i].path+"</td>");
+               contentRowData.append('<td>'+data[i].created+"</td>");
+               contentRowData.append('<td><a href="#"><span class="label label-warning">Editera</span></a></td>');
+               contentRowData.append('<td><a href="#"><span class="label label-danger">Ta bort</span></a></td>');
+        
+          //then append contentRowData to the #content-list table
+          $("#content-list table").append(contentRowData);
+          }
 
-  },
+        },
           error : function(data) {
            console.log("get_all error", data.responseText);
-         }
-   });
-   return false;
-  }
-});
-  $('.admin-form-button').click(function(){
+          }
+         });
+         return false;
+        }
+    });
+      $('.admin-form-button').click(function(){
 
-    $('#admin-form').show();
-    $('#content-list').hide();
+      $('#admin-form').show();
+      $('#content-list').hide();
 
- });
+      });
 });
 
 
