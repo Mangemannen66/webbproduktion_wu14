@@ -191,40 +191,42 @@ function buildSelectOptions(select_html, menuItems, level) {
 
 function showPage(pageUrl) {
 
-  if (pageUrl == "admin-form") {
-   //hide "Add to menu" fields initially
-    $("#admin-form").show();
+  if (!pageUrl || pageUrl == "home") {
+   
+   pageUrl = "content-list";
+     $("#admin-form").hide();
+    $("#content-list").show();
+  }
+  else if (pageUrl == "admin-form") {
+
+     $("#admin-form").show();
     $("#content-list").hide();
     getMenuLinks("menu-main-menu", createAdminMenuSelect);
-  }
 
+  }
 }
 
-
-//go to "page" function
 function goTo(href) {
-  // Show a "page" in a section with the id corresponding
-  // to the link's href value
+
   showPage(href);
 
-  // Add the current "state/page" to our history of visited pages
   history.pushState(null,null,href);
 }
 
 //*******************PuchPop**************************
 
-//setup push/pop-state pushPopListeners for <a> tags
+//<a> tags
 function pushPopListeners() {
   // When we click a link
   $(document).on("click","a",function(event){
 
-    //if the user clicks a real http:// || https:// link,
+    //if  http:// || https:// link,
     if ($(this).attr("href").indexOf("://") >=0) {
-      //assume they are leaving the site
+
       return;
     }
 
-    //prevent "empty" urls from affecting browsing
+    //Viktig!
     if ($(this).attr("href") && $(this).attr("href") !== "#") {
       goTo($(this).attr("href"));
     }
@@ -432,12 +434,14 @@ function getAllContent() {
          return false;
         }
     });
+  
       $('.admin-form-button').click(function(){
-
       $('#admin-form').show();
       $('#content-list').hide();
 
       });
+
+  
 });
 
 
