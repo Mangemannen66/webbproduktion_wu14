@@ -59,7 +59,7 @@ class ArticleQuery extends PDOHelper {
 
   public function getAllArticles(){
 
-    $sql = "SELECT pages.pid, pages.title AS pageTitle, CONCAT(users.fname,' ', users.lname) AS author, menu_links.title, url_alias.path, pages.created
+    $sql = "SELECT pages.pid, pages.title AS pageTitle, CONCAT(users.fname,' ', users.lname) AS author, menu, url_alias.path, pages.created
     FROM pages, users, menu_links, url_alias
     WHERE pages.pid = url_alias.pid  AND url_alias.path = menu_links.path";
 

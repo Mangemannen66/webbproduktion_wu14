@@ -95,7 +95,7 @@ function createMenuTree(menuData) {
 
   // sort by weight
   menuData.sort(function(x,y){
-    return x.weight > y.weight;
+    return x > y;
   });
 
   //since JS always assigns properties by reference
@@ -415,12 +415,11 @@ function getAllContent() {
 
                contentRowData.append('<td><span class="badge">'+data[i].pid+"</span></td>");
                contentRowData.append('<td><strong>'+data[i].pageTitle+"</strong></td>");
-               contentRowData.append('<td>'+data[i].author+"</td>");
-               contentRowData.append('<td>'+data[i].title+"</td>");             
+               contentRowData.append('<td>'+data[i].author+"</td>");           
                contentRowData.append('<td>'+data[i].path+"</td>");
                contentRowData.append('<td>'+data[i].created+"</td>");
-               contentRowData.append('<td><a href="#"><span class="label label-warning">Editera</span></a></td>');
-               contentRowData.append('<td><a href="#"><span class="label label-danger">Ta bort</span></a></td>');
+               contentRowData.append('<td><a href="#"><span class="badge">Editera</span></a></td>');
+               contentRowData.append('<td><a href="#"><span class="badge">Ta bort</span></a></td>');
         
           //then append contentRowData to the #content-list table
           $("#content-list table").append(contentRowData);
