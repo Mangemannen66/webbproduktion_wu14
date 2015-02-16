@@ -63,7 +63,6 @@ class ServerQuery extends PDOHelper {
     FROM pages, users, url_alias
     WHERE pages.pid = url_alias.pid";
 
-
     return $this->query($sql);  
 
   }
