@@ -95,7 +95,7 @@ function createMenuTree(menuData) {
 
   // sort by weight
   menuData.sort(function(x,y){
-    return x > y;
+    return x.weight > y.weight;
   });
 
   //since JS always assigns properties by reference
@@ -388,7 +388,6 @@ function getMenuLinks(menu_name, successFunction) {
 
 
   $('.content-list-button').click(function(){
-
     $('#content-list').show();
     $('#admin-form').hide();
     getAllContent();
