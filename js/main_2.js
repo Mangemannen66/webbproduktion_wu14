@@ -1,11 +1,6 @@
   // DOM ready
 $(function() {
 
-    $('.navbar-header li').click(function(){
-    $("main .row").children().not(".control").hide();
-    $(' .navbar-header li').addClass('active').not(this).removeClass('active');
-  });
-
 
 //setup history push/pop-state
  pushPopListeners();
@@ -191,17 +186,31 @@ function buildSelectOptions(select_html, menuItems, level) {
 
 function showPage(pageUrl) {
 
-  if (!pageUrl || pageUrl == "home") {
+  if (pageUrl == "content-list" || pageUrl == "") {
    
    pageUrl = "content-list";
-     $("#admin-form").hide();
+    $("#admin-form").hide();
     $("#content-list").show();
+    $('.content-list-button').click(function(){
+    $('#content-list').show();
+    $('#admin-form').hide();
+    
+
+ });
+    getAllContent();
+
   }
+
   else if (pageUrl == "admin-form") {
 
-     $("#admin-form").show();
+    $("#admin-form").show();
     $("#content-list").hide();
     getMenuLinks("menu-main-menu", createAdminMenuSelect);
+    $('.admin-form-button').click(function(){
+    $('#admin-form').show();
+    $('#content-list').hide();
+
+  });
 
   }
 }
@@ -212,6 +221,12 @@ function goTo(href) {
 
   history.pushState(null,null,href);
 }
+
+
+
+
+
+
 
 //*******************PuchPop**************************
 
@@ -323,25 +338,21 @@ function addMenuLink() {
 
 
     console.log("menuData: ", menuData); //Loggar menuData
-  $.ajax ({
-      url: "php/article_save.php",
-      dataType: "json",
-      data: {
-          "menu_data" : menuData
+    $.ajax ({
+        url: "php/article_save.php",
+        dataType: "json",
+        data: {
+            "menu_data" : menuData
 
-      },
-
-      success : function(data) {
-        console.log("addMenu success: ", data); //Loggar om menuData sparas
-        
-      },
-      errror : function(data) {
-        console.log("addMenu error: ", data);
-      }
-
-  });
-
-  return false;
+        },
+        success : function(data) {
+          console.log("addMenu success: ", data); //Loggar om menuData sparas
+        },
+        errror : function(data) {
+          console.log("addMenu error: ", data);
+        }
+    });
+    return false;
    
 }
 
@@ -385,23 +396,14 @@ function getMenuLinks(menu_name, successFunction) {
   }
 
 
-
-
-  $('.content-list-button').click(function(){
-    $('#content-list').show();
-    $('#admin-form').hide();
-    getAllContent();
-
-
+//Ta fram sid-data och visa i admin
 
 function getAllContent() {
-
     $.ajax ({
       url: "php/get_all_content.php",
       dataType: "json",
       data: {
           "get_all" : 1
-
       },
 
         success : function(data) {
@@ -410,16 +412,27 @@ function getAllContent() {
 
        for (i = 0; i < data.length; i++) {
            var contentRowData = $("<tr/>");
-               contentRowData.data("contentData", data[i]);
+            contentRowData.data("contentData", data[i]);
+            contentRowData.append('<td><span class="badge">'+data[i].pid+"</span></td>");
+            contentRowData.append('<td><strong>'+data[i].pageTitle+"</strong></td>");
+            contentRowData.append('<td>'+data[i].author+"</td>");           
+            contentRowData.append('<td>'+data[i].path+"</td>");
+            contentRowData.append('<td>'+data[i].created+"</td>");
 
-               contentRowData.append('<td><span class="badge">'+data[i].pid+"</span></td>");
-               contentRowData.append('<td><strong>'+data[i].pageTitle+"</strong></td>");
-               contentRowData.append('<td>'+data[i].author+"</td>");           
-               contentRowData.append('<td>'+data[i].path+"</td>");
-               contentRowData.append('<td>'+data[i].created+"</td>");
+            contentRowData.data("page", data[i]);
+
+            var contentRowDataButtons = $('<td/>');
+            contentRowDataButtons.append('<div class="btn-group btn-group-xs"/>');
+            contentRowDataButtons.find(".btn-group").append('<button type="button" class="btn btn-default editBtn" title="Editera"><span class="glyphicon glyphicon-pencil"></span></button>');
+            contentRowDataButtons.find(".btn-group").append('<button type="button" class="btn btn-default trashBtn" title="Ta bort"><span class="glyphicon glyphicon-trash"></span></button>');
+            contentRowData.append(contentRowDataButtons);
+
+
+
+               /*
                contentRowData.append('<td><a href="#"><span class="badge">Editera</span></a></td>');
                contentRowData.append('<td><a href="#"><span class="badge">Ta bort</span></a></td>');
-        
+        */
           //then append contentRowData to the #content-list table
           $("#content-list table").append(contentRowData);
           }
@@ -428,18 +441,32 @@ function getAllContent() {
           error : function(data) {
            console.log("get_all error", data.responseText);
           }
-         });
-         return false;
-        }
-    });
-  
-      $('.admin-form-button').click(function(){
-      $('#admin-form').show();
-      $('#content-list').hide();
+        });
+        return false;
+      }
 
-      });
+        $.ajax ({
+         url: "php/get_footer.php",
+        type: "post",
+        dataType: "json",
+        success: function(data){
+        $(".footer_info").empty();
+         console.log("footer success: ", data);
+        $(".footer_info").append("<br><address class='footer_info'><b>" 
+         + data[0].name + " </b>&nbsp; "
+         + data[0].street + " &nbsp;"
+         + data[0].postalcode + " &nbsp;"
+         + data[0].city + "&nbsp;&nbsp;<b>Telefon:</b>&nbsp;"
+         + data[0].phone + "&nbsp;&nbsp;<b>Email:</b>&nbsp;"
+         + data[0].email + "</address> ");
+         },
+         error: function(data){
+          console.log("footer error: ", data);
+          }
+        });
+        return false;
+   
 
-  
 });
 
 

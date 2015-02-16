@@ -87,7 +87,19 @@ class ArticleQuery extends PDOHelper {
     
     return $this->query($sql, $menu_name);
   }
+
+
+//Footer info
+  public function getFooterContent() {
+    $sql = "SELECT * FROM footer_info ";
+    return $this->query($sql);
+  }
+
+  
 }
+
+
+
 
 
 
