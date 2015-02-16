@@ -22,8 +22,7 @@ $(function() {
   $("#page_title").keyup(function() {
     //if #adminForm .pageUrlGroup input[type=checkbox] is !:checked
     if (!$('#admin-form .pageUrlGroup input[type=checkbox]').is(":checked")) {
-      //generate machine name on keyup using generateMachineName() 
-      //function from helper.js
+    
       $('#page_url').val(generateServerName($(this).val()));
     }
   });
@@ -48,9 +47,7 @@ $(function() {
 
 
 
-
-
-//function to generate a url alias from "normal" string
+//funktion för att generera alias från "normal"-sträng
 function generateServerName(urlText) {
 
   //remove any empy spaces at beginning and/or end of string
@@ -399,19 +396,19 @@ function getMenuLinks(menu_name, successFunction) {
 //Ta fram sid-data och visa i admin
 
 function getAllContent() {
-    $.ajax ({
-      url: "php/get_all_content.php",
-      dataType: "json",
-      data: {
-          "get_all" : 1
-      },
+  $.ajax ({
+    url: "php/get_all_content.php",
+    dataType: "json",
+    data: {
+        "get_all" : 1
+    },
 
-        success : function(data) {
-          console.log("get_all" , data);
-       $("#content-list table tr").not(".pageTableHeads").remove();
+    success : function(data) {
+    console.log("get_all" , data);
+    $("#content-list table tr").not(".pageTableHeads").remove();
 
-       for (i = 0; i < data.length; i++) {
-           var contentRowData = $("<tr/>");
+      for (i = 0; i < data.length; i++) {
+        var contentRowData = $("<tr/>");
             contentRowData.data("contentData", data[i]);
             contentRowData.append('<td><span class="badge">'+data[i].pid+"</span></td>");
             contentRowData.append('<td><strong>'+data[i].pageTitle+"</strong></td>");
@@ -423,12 +420,9 @@ function getAllContent() {
 
             var contentRowDataButtons = $('<td/>');
             contentRowDataButtons.append('<div class="btn-group btn-group-xs"/>');
-            contentRowDataButtons.find(".btn-group").append('<button type="button" class="btn btn-default editBtn" title="Editera"><span class="glyphicon glyphicon-pencil"></span></button>');
+            contentRowDataButtons.find(".btn-group").append('<button type="button" class="btn btn-default editBtn" title="Editera sidan"><span class="glyphicon glyphicon-pencil"></span></button>');
             contentRowDataButtons.find(".btn-group").append('<button type="button" class="btn btn-default trashBtn" title="Ta bort"><span class="glyphicon glyphicon-trash"></span></button>');
             contentRowData.append(contentRowDataButtons);
-
-
-
                /*
                contentRowData.append('<td><a href="#"><span class="badge">Editera</span></a></td>');
                contentRowData.append('<td><a href="#"><span class="badge">Ta bort</span></a></td>');
@@ -443,7 +437,9 @@ function getAllContent() {
           }
         });
         return false;
-      }
+        }
+
+        //Footerhantering
 
         $.ajax ({
          url: "php/get_footer.php",
@@ -457,8 +453,8 @@ function getAllContent() {
          + data[0].street + " &nbsp;"
          + data[0].postalcode + " &nbsp;"
          + data[0].city + "&nbsp;&nbsp;<b>Telefon:</b>&nbsp;"
-         + data[0].phone + "&nbsp;&nbsp;<b>Email:</b>&nbsp;"
-         + data[0].email + "</address> ");
+         + data[0].phone + "&nbsp;&nbsp;<b>Email:<a href='mailto:mumin@barbapappa.klump'></b>&nbsp;"
+         + data[0].email + "</a>&nbsp;&nbsp;<i>" + data[0].info + "</i></address> ");
          },
          error: function(data){
           console.log("footer error: ", data);

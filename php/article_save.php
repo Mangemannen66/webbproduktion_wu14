@@ -2,7 +2,7 @@
 
 include_once("autoloader.php");
 
-$query = New ArticleQuery("127.0.0.1","webbproduktion_wu14","root","mysql");
+$query = New ServerQuery("127.0.0.1","webbproduktion_wu14","root","mysql");
 
 //save content if told to do so (by receiving correct AJAX data)
 if (isset($_REQUEST["page_data"])) {
