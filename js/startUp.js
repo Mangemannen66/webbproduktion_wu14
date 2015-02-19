@@ -1,82 +1,46 @@
 
-
-
 function startUp() {
     //setup history push/pop-state
     pushPopListeners();
 
-    //Initial döljs menyhanteringsfält
-    $("#admin-form .menuLinkFields").hide();
-    //pageUrlGroup clickHandler
-    $('#admin-form .pageUrlGroup input[type=checkbox]').click(function() {
-      //enable/disable the page_url input field
-      $("#page_url").attr("disabled", !$(this).is(":checked"));
+//*************submit-handler och AJAX*******************
 
-      if (!$(this).is(":checked")) {
+$("#admin-form form").submit(function() {
 
-        $('#page_url').val(generateServerName($("#page_title").val()));
-      }
-    });
+  var updateA = $('#adminUpdateBtn:visible').length > 0;
+  console.log(updateA);
 
-    //adminForm page_title -> page_url keyUp handler
-    $("#page_title").keyup(function() {
-      //if #adminForm .pageUrlGroup input[type=checkbox] is !:checked
-      if (!$('#admin-form .pageUrlGroup input[type=checkbox]').is(":checked")) {
-      
-        $('#page_url').val(generateServerName($(this).val()));
-      }
-    });
+  if (!updateA) {
 
-    //adminForm page_url blur handler
-    //from jQuery documentation: "The blur event is sent to an element when it loses focus"
-    $("#page_url").blur(function() {
-      //whenever a user "is done" with the page_url input field
-      $(this).val(generateServerName($(this).val()));
-    });
+    var adminPageData = {}
+    adminPageData[":title"] = $("#page_title").val();
+    adminPageData[":content"] = $("#page_content").val();
+    
+    console.log("adminPageData: ", adminPageData);
+    saveArticle(adminPageData);
+   
 
-    //adminForm add menu checkbox clickhandler to show/hide add menu fields
-    $('.addToMenu input[type="checkbox"]').click(function() {
-      if ($(this).is(":checked")) {
-        $("#admin-form .menuLinkFields").fadeIn(500);
-      } else {
-        $("#admin-form .menuLinkFields").fadeOut(500);
-      }
+  } 
+  else {
 
-      $(".addToMenu #menu_title").attr("required", $(this).is(":checked"));
-    });
+    var updateData = {};
+    updateData[":title"] = $("#page_title").val();
+    updateData[":content"] = $("#page_content").val();
+    updateData[":pid"] = $("#adminUpdateBtn").data('pid');
 
-    //*************submit-handler och AJAX*******************
+    saveEditArticle(updateData);
+    console.log("updateData: ", updateData);
+    }
+    return false;
+});
 
-    $("#admin-form form").submit(function() {
-
-      var updateA = $('#adminUpdateBtn:visible').length > 0;
-      console.log(updateA);
-
-      if (!updateA) {
-
-        var adminPageData = {}
-        adminPageData[":title"] = $("#page_title").val();
-        adminPageData[":content"] = $("#page_content").val();
-        
-        console.log("adminPageData: ", adminPageData);
-        saveArticle(adminPageData);
-       
-
-      } 
-      else {
-
-        var updateData = {};
-        updateData[":title"] = $("#page_title").val();
-        updateData[":content"] = $("#page_content").val();
-        updateData[":pid"] = $("#adminUpdateBtn").data('pid');
-
-        saveEditArticle(updateData);
-        console.log("updateData: ", updateData);
-      }
-        return false;
-    });
-
-//********************************************************
+  function getArticle(data) {
+    // console.log("getArticle success: ", data);
+    
+    $("#page_title").val(data[0]["title"]);
+    $("#page_content").val(data[0]["content"]);
+    $("#updateBtn").prop('value', data[0]["pid"]);
+  }
 
 
 
@@ -111,68 +75,47 @@ function startUp() {
     return urlText.toLowerCase();
   }
 
+  //Initial döljs menyhanteringsfält
+  $("#admin-form .menuLinkFields").hide();
+  //pageUrlGroup clickHandler
+  $('#admin-form .pageUrlGroup input[type=checkbox]').click(function() {
+  //enable/disable the page_url input field
+  $("#page_url").attr("disabled", !$(this).is(":checked"));
 
-//********************frontpage(show and hide)*************
+    if (!$(this).is(":checked")) {
 
-
-  function showPage(pageUrl) {
-
-    if (pageUrl == "content-list" || pageUrl == "") {
-     
-     pageUrl = "content-list";
-      $("#admin-form").hide();
-      $("#content-list").show();
-      $('.content-list-button').click(function(){
-      $('#content-list').show();
-      $('#admin-form').hide();
-      
-
-    });
-      
-      getAllContent();
-
+      $('#page_url').val(generateServerName($("#page_title").val()));
     }
+  });
 
-    if (pageUrl == "admin-form") {
-      pageUrl = "admin-form";
-      $("#admin-form").show();
-      $("#content-list").hide();
-      getMenuLinks("menu-main-menu", createAdminMenuSelect);
-
-      var updateA = false;
-
-      $("#adminSubmitBtn").hide();
-      $("#admin-form #adminUpdateBtn").click(function(){
-      updateA = true;
-      $("#admin-form #adminUpdateBtn").submit();
-
-      return false;
-      });
+  //adminForm page_title -> page_url keyUp handler
+  $("#page_title").keyup(function() {
+    //if #adminForm .pageUrlGroup input[type=checkbox] is !:checked
+    if (!$('#admin-form .pageUrlGroup input[type=checkbox]').is(":checked")) {
     
-      
-      $("#adminSubmitBtn").show();
-      $("#adminUpdateBtn").hide();
-      $("#admin-form #adminSubmitBtn").click(function(){
-      updateA = false;
-      $("#admin-form #adminSubmitBtn").submit();
+      $('#page_url').val(generateServerName($(this).val()));
+    }
+  });
 
-      return false;
-      });
+  //adminForm page_url blur handler
+  //from jQuery documentation: "The blur event is sent to an element when it loses focus"
+  $("#page_url").blur(function() {
+    //whenever a user "is done" with the page_url input field
+  $(this).val(generateServerName($(this).val()));
+  });
+
+  //adminForm add menu checkbox clickhandler to show/hide add menu fields
+  $('.addToMenu input[type="checkbox"]').click(function() {
+    if ($(this).is(":checked")) {
+      $("#admin-form .menuLinkFields").fadeIn(500);
+    } else {
+      $("#admin-form .menuLinkFields").fadeOut(500);
     }
 
+    $(".addToMenu #menu_title").attr("required", $(this).is(":checked"));
+  });
+    
 
-
-  }
-
-
-
-
-  function goTo(href) {
-
-    showPage(href);
-
-    history.pushState(null,null,href);
-  }
 }
 
 

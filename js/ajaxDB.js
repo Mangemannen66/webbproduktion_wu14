@@ -1,5 +1,7 @@
 
-function saveArticle() {
+
+function saveArticle(adminPageData) {
+
   $.ajax({
     url: "php/article_save.php",
     type: "post",
@@ -11,12 +13,14 @@ function saveArticle() {
     success: function(data) {
       saveUrl();
       console.log("saveArticle success: ", data);
+      //$(".form-horizontal .form").trigger("reset");
     },
     error: function(data) {
       console.log("saveArticle error: ", data);
     }
   });
-  
+   
+  return false;
 }
 
 function saveUrl() {
@@ -43,7 +47,7 @@ function saveUrl() {
       console.log("saveUrl error: ", data);
     }
   });
-
+  
 }
 
 function addMenuLink() {
@@ -72,17 +76,18 @@ function addMenuLink() {
         },
         success : function(data) {
           console.log("addMenu success: ", data); //Loggar om menuData sparas
+    
         },
         errror : function(data) {
           console.log("addMenu error: ", data);
         }
     });
 
-   
+    
 }
 
 /**
- * Menus
+ * Menyn
  */
 
 //function to getMenuLinks. 
@@ -97,7 +102,7 @@ function getMenuNames() {
       console.log("getMenuLinks error: ", data.responseText);
     }
   });
-
+  
 }
 
 
@@ -117,8 +122,8 @@ function getMenuLinks(menu_name, successFunction) {
       console.log("getMenuLinks error: ", data.responseText);
     }
   });
-
-}
+ 
+  }
 
 
 
@@ -145,8 +150,8 @@ function getAllContent() {
             contentRowData.append('<td><span class="badge">'+data[i].pid+"</span></td>");
             contentRowData.append('<td><strong>'+data[i].pageTitle+"</strong></td>");
             contentRowData.append('<td>'+data[i].author+"</td>");           
-          //  contentRowData.append('<td>'+data[i].path+"</td>");
-         //   contentRowData.append('<td>'+data[i].content+"</td>");
+            //contentRowData.append('<td>'+data[i].path+"</td>");
+            //contentRowData.append('<td>'+data[i].content+"</td>");
 
             contentRowData.append('<td>'+data[i].created+"</td>");
 
@@ -163,48 +168,25 @@ function getAllContent() {
         */
           //then append contentRowData to the #content-list table
           $("#content-list table").append(contentRowData);
-          }
+      }
 
           $(".editArticle").click(function() {
           getEditArticle($(this).val());
-          $("#admin-form").fadeIn(200);
+          $("#admin-form").fadeIn(1600);
           $("#content-list").hide();
-          $("#updateBtn").show();
-          $("#adminBtn").hide();
+          $("#adminUpdateBtn").show();
+          $("#adminSubmitBtn").hide();
 
-        });
+          });
       },
           error: function(data) {
            console.log("get_all error", data.responseText);
-      }
+          }
     });
-  
+    
   }
       
-
-        //Footerhantering
-
-        $.ajax ({
-         url: "php/get_footer.php",
-        type: "post",
-        dataType: "json",
-        success: function(data){
-        $(".footer_info").empty();
-         console.log("footer success: ", data);
-        $(".footer_info").append("<br><address class='footer_info'><b>" 
-         + data[0].name + " </b>&nbsp; "
-         + data[0].street + " &nbsp;"
-         + data[0].postalcode + " &nbsp;"
-         + data[0].city + "&nbsp;&nbsp;<b>Telefon:</b>&nbsp;"
-         + data[0].phone + "&nbsp;&nbsp;<b>Email:<a href='mailto:mumin@barbapappa.klump'></b>&nbsp;"
-         + data[0].email + "</a>&nbsp;&nbsp;<em>" + data[0].info + "</em></address> ");
-         },
-         error: function(data){
-          console.log("footer error: ", data.responseText);
-          }
-        });
-    
-      
+  //*******AJAX-Updatering av artikel*************
 
   function getEditArticle(editArticle) {
     $.ajax ({
@@ -222,19 +204,52 @@ function getAllContent() {
   }
 
   function saveEditArticle(updateData) {
+    console.log("The update data",updateData);
     $.ajax ({
       url: "php/article_save.php",
       type: "post",
       dataType: "json",
       data: {
-        "update_article": updateArticle
+        "update_data": updateData
       },
       success: function(data) {
-        console.log("updateArticle success: ", data);
-        // $("#adminForm")[0].reset();
+        console.log("updateData success: ", data);
+         //$("#admin-form")[0].reset();
       },
       error: function(data) {
-        console.log("updateArticle error: ", data);
+        console.log("updateData error: ", data);
       }
     });
   }
+  
+  function getArticle(data) {
+     console.log("getArticle success: ", data);
+    
+    $("#page_title").val(data[0]["title"]);
+    $("#page_content").val(data[0]["content"]);
+    $("#adminUpdateBtn").data('pid', data[0]["pid"]);
+
+  }
+
+  //Footerhantering*********************************
+
+  $.ajax ({
+    url: "php/get_footer.php",
+    type: "get",
+    dataType: "json",
+    success: function(data){
+    $(".footer_info").empty();
+    console.log("footer success: ", data);
+    $(".footer_info").append("<br><address class='footer_info'><b>" 
+    + data[0].name + " </b>&nbsp; "
+    + data[0].street + " &nbsp;"
+    + data[0].postalcode + " &nbsp;"
+    + data[0].city + "&nbsp;&nbsp;<b>Telefon:</b>&nbsp;"
+    + data[0].phone + "&nbsp;&nbsp;<b>Email:<a href='mailto:mumin@barbapappa.klump'></b>&nbsp;"
+    + data[0].email + "</a>&nbsp;&nbsp;<em>" + data[0].info + "</em></address> ");
+    },
+    error: function(data){
+    console.log("footer error: ", data.responseText);
+    }
+  });
+ 

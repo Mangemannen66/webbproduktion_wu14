@@ -92,6 +92,5 @@ function buildSelectOptions(select_html, menuItems, level) {
       select_html.append(buildSelectOptions(select_html, menuItems[j].children, level+1));
     }
   }
-
   return select_html;
 }

@@ -1,5 +1,53 @@
 //*******************PuchPop**************************
 
+
+
+function showPage(pageUrl) {
+
+  if (pageUrl == "content-list" || pageUrl == "") {
+   
+    pageUrl = "content-list";
+    $("#admin-form").hide();
+    $("#content-list").show();
+
+    $('.content-list-button').click(function(){
+    $('#content-list').show();
+    $('#admin-form').hide();
+    });
+
+    getAllContent();
+
+  }
+
+  if (pageUrl == "admin-form") {
+    pageUrl = "admin-form";
+    $("#admin-form").show();
+    $("#content-list").hide();
+    getMenuLinks("menu-main-menu", createAdminMenuSelect);
+
+    var updateA = false;
+
+    $("#adminSubmitBtn").hide();
+    $(" #adminUpdateBtn").click(function(){
+
+    updateA = true;
+    $(" #adminUpdateBtn").submit();
+
+    return false;
+    });
+  
+    
+    $("#adminSubmitBtn").show();
+    $("#adminUpdateBtn").hide();
+    $(" #adminSubmitBtn").click(function(){
+    updateA = false;
+    $(" #adminSubmitBtn").submit();
+
+    return false;
+    });
+  }
+}
+
 //<a> tags
 function pushPopListeners() {
   // When we click a link
@@ -20,7 +68,13 @@ function pushPopListeners() {
   });
 
 
-  addEventListener("popstate",popUpTheDOM);
+
+function goTo(href) {
+
+  showPage(href);
+
+  history.pushState(null,null,href);
+}
 
   popUpTheDOM();
 
