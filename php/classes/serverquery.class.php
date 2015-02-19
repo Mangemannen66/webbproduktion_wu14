@@ -59,12 +59,26 @@ class ServerQuery extends PDOHelper {
 
   public function getAllArticles(){
 
-    $sql = "SELECT pages.pid, pages.title AS pageTitle, CONCAT(users.fname,' ', users.lname) AS author, url_alias.path, pages.created
+    $sql = "SELECT pages.pid, pages.title AS pageTitle, CONCAT(users.fname,' ', users.lname) AS author, pages.created
     FROM pages, users, url_alias
     WHERE pages.pid = url_alias.pid";
 
     return $this->query($sql);  
 
+  }
+
+  public function getEditArticle($edit_article) {
+      $this_article = array(":pid" => $edit_article);
+      $sql ="SELECT * FROM pages WHERE pid = :pid";
+      $this_article_data = $this->query($sql, $this_article);
+
+      return $this_article_data;
+  }
+
+
+  public function saveEditArticle($update_data) {
+      $sql = "UPDATE pages SET title = :title, content = :content WHERE pid = :pid ";
+     return $this->query($sql, $update_data);
   }
   
 

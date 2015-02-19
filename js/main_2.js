@@ -1,16 +1,14 @@
   // DOM ready
 $(function() {
 
-
-//setup history push/pop-state
  pushPopListeners();
 
 //Initial döljs menyhanteringsfält
   $("#admin-form .menuLinkFields").hide();
   //pageUrlGroup clickHandler
   $('#admin-form .pageUrlGroup input[type=checkbox]').click(function() {
-    //enable/disable the page_url input field
-    $("#page_url").attr("disabled", !$(this).is(":checked"));
+  //enable/disable the page_url input field
+  $("#page_url").attr("disabled", !$(this).is(":checked"));
 
     if (!$(this).is(":checked")) {
 
@@ -31,7 +29,7 @@ $(function() {
   //from jQuery documentation: "The blur event is sent to an element when it loses focus"
   $("#page_url").blur(function() {
     //whenever a user "is done" with the page_url input field
-    $(this).val(generateServerName($(this).val()));
+  $(this).val(generateServerName($(this).val()));
   });
 
   //adminForm add menu checkbox clickhandler to show/hide add menu fields
@@ -45,7 +43,7 @@ $(function() {
     $(".addToMenu #menu_title").attr("required", $(this).is(":checked"));
   });
 
-
+//Teckenersättning**************************************
 
 //funktion för att generera alias från "normal"-sträng
 function generateServerName(urlText) {
@@ -172,10 +170,8 @@ function buildSelectOptions(select_html, menuItems, level) {
       select_html.append(buildSelectOptions(select_html, menuItems[j].children, level+1));
     }
   }
-
   return select_html;
 }
-
 
 
 //********************frontpage(show and hide)*************
@@ -185,7 +181,7 @@ function showPage(pageUrl) {
 
   if (pageUrl == "content-list" || pageUrl == "") {
    
-   pageUrl = "content-list";
+    pageUrl = "content-list";
     $("#admin-form").hide();
     $("#content-list").show();
     $('.content-list-button').click(function(){
@@ -198,19 +194,36 @@ function showPage(pageUrl) {
 
   }
 
-  else if (pageUrl == "admin-form") {
-
+  if (pageUrl == "admin-form") {
+    pageUrl = "admin-form";
     $("#admin-form").show();
     $("#content-list").hide();
     getMenuLinks("menu-main-menu", createAdminMenuSelect);
-    $('.admin-form-button').click(function(){
-    $('#admin-form').show();
-    $('#content-list').hide();
 
-  });
+    var updateA = false;
 
+    $("#adminSubmitBtn").hide();
+    $(" #adminUpdateBtn").click(function(){
+    updateA = true;
+    $(" #adminUpdateBtn").submit();
+
+    return false;
+    });
+  
+    
+    $("#adminSubmitBtn").show();
+    $("#adminUpdateBtn").hide();
+    $(" #adminSubmitBtn").click(function(){
+    updateA = false;
+    $(" #adminSubmitBtn").submit();
+
+    return false;
+    });
   }
 }
+
+
+
 
 function goTo(href) {
 
@@ -223,6 +236,8 @@ function goTo(href) {
 
 
 
+
+ 
 
 
 //*******************PuchPop**************************
@@ -267,13 +282,38 @@ function pushPopListeners() {
 //*************submit-handler och AJAX*******************
 
 $("#admin-form form").submit(function() {
- 
 
-    var adminPageData = {
-      ":title" : $(this).find("#page_title").val(),
-      ":content" : $(this).find("#page_content").val(),
-    };
+  var updateA = $('#adminUpdateBtn:visible').length > 0;
+  console.log(updateA);
+
+  if (!updateA) {
+
+    var adminPageData = {}
+    adminPageData[":title"] = $("#page_title").val();
+    adminPageData[":content"] = $("#page_content").val();
+    
     console.log("adminPageData: ", adminPageData);
+    saveArticle(adminPageData);
+   
+
+  } 
+  else {
+
+    var updateData = {};
+    updateData[":title"] = $("#page_title").val();
+    updateData[":content"] = $("#page_content").val();
+    updateData[":pid"] = $("#adminUpdateBtn").data('pid');
+
+    saveEditArticle(updateData);
+    console.log("updateData: ", updateData);
+  }
+    return false;
+});
+
+
+
+function saveArticle(adminPageData) {
+
   $.ajax({
     url: "php/article_save.php",
     type: "post",
@@ -285,20 +325,24 @@ $("#admin-form form").submit(function() {
     success: function(data) {
       saveUrl();
       console.log("saveArticle success: ", data);
+      //$(".form-horizontal .form").trigger("reset");
     },
     error: function(data) {
       console.log("saveArticle error: ", data);
     }
-  });
+   });
+   
   return false;
-});
+}
 
 function saveUrl() {
 
   var adminUrlData = {
 
     ":path" : $("#page_url").val()
+
   };
+
  console.log("adminUrlData: ", adminUrlData);
   $.ajax ({
     url: "php/article_save.php",
@@ -344,17 +388,19 @@ function addMenuLink() {
         },
         success : function(data) {
           console.log("addMenu success: ", data); //Loggar om menuData sparas
+    
         },
         errror : function(data) {
           console.log("addMenu error: ", data);
         }
     });
+
     return false;
-   
+
 }
 
 /**
- * Menus
+ * Menyn
  */
 
 //function to getMenuLinks. 
@@ -393,7 +439,9 @@ function getMenuLinks(menu_name, successFunction) {
   }
 
 
-//Ta fram sid-data och visa i admin
+
+
+//Ta fram all sid-data och visa i admin
 
 function getAllContent() {
   $.ajax ({
@@ -405,22 +453,26 @@ function getAllContent() {
 
     success : function(data) {
     console.log("get_all" , data);
+     
+
     $("#content-list table tr").not(".pageTableHeads").remove();
 
-      for (i = 0; i < data.length; i++) {
+      for (var i = 0; i < data.length; i++) {
         var contentRowData = $("<tr/>");
             contentRowData.data("contentData", data[i]);
             contentRowData.append('<td><span class="badge">'+data[i].pid+"</span></td>");
             contentRowData.append('<td><strong>'+data[i].pageTitle+"</strong></td>");
             contentRowData.append('<td>'+data[i].author+"</td>");           
-            contentRowData.append('<td>'+data[i].path+"</td>");
+            //contentRowData.append('<td>'+data[i].path+"</td>");
+            //contentRowData.append('<td>'+data[i].content+"</td>");
+
             contentRowData.append('<td>'+data[i].created+"</td>");
 
             contentRowData.data("page", data[i]);
 
             var contentRowDataButtons = $('<td/>');
             contentRowDataButtons.append('<div class="btn-group btn-group-xs"/>');
-            contentRowDataButtons.find(".btn-group").append('<button type="button" class="btn btn-default editBtn" title="Editera sidan"><span class="glyphicon glyphicon-pencil"></span></button>');
+            contentRowDataButtons.find(".btn-group").append('<button type="button" class="editArticle btn btn-default editBtn" title="Editera sidan" value="'+data[i]["pid"]+'"><span class="glyphicon glyphicon-pencil"></span></button>');
             contentRowDataButtons.find(".btn-group").append('<button type="button" class="btn btn-default trashBtn" title="Ta bort"><span class="glyphicon glyphicon-trash"></span></button>');
             contentRowData.append(contentRowDataButtons);
                /*
@@ -429,39 +481,91 @@ function getAllContent() {
         */
           //then append contentRowData to the #content-list table
           $("#content-list table").append(contentRowData);
-          }
+      }
 
-        },
-          error : function(data) {
+          $(".editArticle").click(function() {
+          getEditArticle($(this).val());
+          $("#admin-form").fadeIn(1600);
+          $("#content-list").hide();
+          $("#adminUpdateBtn").show();
+          $("#adminSubmitBtn").hide();
+
+          });
+      },
+          error: function(data) {
            console.log("get_all error", data.responseText);
-          }
-        });
-        return false;
-        }
+      }
+    });
+    return false;
+  }
+      
+  //*******AJAX-Updatering av artikel*************
 
-        //Footerhantering
+  function getEditArticle(editArticle) {
+    $.ajax ({
+      url: "php/get_content.php",
+      type: "get",
+      dataType: "json",
+      data: {
+        "edit_article": editArticle
+      },
+      success: getArticle,
+      error: function(data) {
+        console.log("getEditArticle error: ", data);
+      }
+    });
+  }
 
-        $.ajax ({
-         url: "php/get_footer.php",
-        type: "post",
-        dataType: "json",
-        success: function(data){
-        $(".footer_info").empty();
-         console.log("footer success: ", data);
-        $(".footer_info").append("<br><address class='footer_info'><b>" 
-         + data[0].name + " </b>&nbsp; "
-         + data[0].street + " &nbsp;"
-         + data[0].postalcode + " &nbsp;"
-         + data[0].city + "&nbsp;&nbsp;<b>Telefon:</b>&nbsp;"
-         + data[0].phone + "&nbsp;&nbsp;<b>Email:<a href='mailto:mumin@barbapappa.klump'></b>&nbsp;"
-         + data[0].email + "</a>&nbsp;&nbsp;<i>" + data[0].info + "</i></address> ");
-         },
-         error: function(data){
-          console.log("footer error: ", data);
-          }
-        });
-        return false;
-   
+  function saveEditArticle(updateData) {
+    console.log("The update data",updateData);
+    $.ajax ({
+      url: "php/article_save.php",
+      type: "post",
+      dataType: "json",
+      data: {
+        "update_data": updateData
+      },
+      success: function(data) {
+        console.log("updateData success: ", data);
+         //$("#admin-form")[0].reset();
+      },
+      error: function(data) {
+        console.log("updateData error: ", data);
+      }
+    });
+  }
+  function getArticle(data) {
+     console.log("getArticle success: ", data);
+    
+    $("#page_title").val(data[0]["title"]);
+    $("#page_content").val(data[0]["content"]);
+    $("#adminUpdateBtn").data('pid', data[0]["pid"]);
+
+  }
+
+  //Footerhantering*********************************
+
+  $.ajax ({
+    url: "php/get_footer.php",
+    type: "post",
+    dataType: "json",
+    success: function(data){
+    $(".footer_info").empty();
+    console.log("footer success: ", data);
+    $(".footer_info").append("<br><address class='footer_info'><b>" 
+    + data[0].name + " </b>&nbsp; "
+    + data[0].street + " &nbsp;"
+    + data[0].postalcode + " &nbsp;"
+    + data[0].city + "&nbsp;&nbsp;<b>Telefon:</b>&nbsp;"
+    + data[0].phone + "&nbsp;&nbsp;<b>Email:<a href='mailto:mumin@barbapappa.klump'></b>&nbsp;"
+    + data[0].email + "</a>&nbsp;&nbsp;<em>" + data[0].info + "</em></address> ");
+    },
+    error: function(data){
+    console.log("footer error: ", data.responseText);
+    }
+  });
+  return false;
+      
 
 });
 
