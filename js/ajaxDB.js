@@ -76,14 +76,13 @@ function addMenuLink() {
         },
         success : function(data) {
           console.log("addMenu success: ", data); //Loggar om menuData sparas
-    
+          $("#admin-form form")[0].reset();
+          goTo("content-list");
         },
         errror : function(data) {
           console.log("addMenu error: ", data);
         }
-    });
-
-    
+    });  
 }
 
 /**
@@ -102,7 +101,6 @@ function getMenuNames() {
       console.log("getMenuLinks error: ", data.responseText);
     }
   });
-  
 }
 
 
@@ -123,7 +121,7 @@ function getMenuLinks(menu_name, successFunction) {
     }
   });
  
-  }
+}
 
 
 
@@ -133,6 +131,7 @@ function getMenuLinks(menu_name, successFunction) {
 function getAllContent() {
   $.ajax ({
     url: "php/get_all_content.php",
+    type:"post",
     dataType: "json",
     data: {
         "get_all" : 1
@@ -141,7 +140,6 @@ function getAllContent() {
     success : function(data) {
     console.log("get_all" , data);
      
-
     $("#content-list table tr").not(".pageTableHeads").remove();
 
       for (var i = 0; i < data.length; i++) {
@@ -169,14 +167,13 @@ function getAllContent() {
           //then append contentRowData to the #content-list table
           $("#content-list table").append(contentRowData);
       }
-
+          //klickhantering och vad som ska visas/döljas när editknapp för specifik sida klickas
           $(".editArticle").click(function() {
           getEditArticle($(this).val());
-          $("#admin-form").fadeIn(1600);
+          $("#admin-form").show();
           $("#content-list").hide();
           $("#adminUpdateBtn").show();
           $("#adminSubmitBtn").hide();
-
           });
       },
           error: function(data) {
@@ -188,6 +185,8 @@ function getAllContent() {
       
   //*******AJAX-Updatering av artikel*************
 
+
+  //Hämta specifik sida/artikel för editering från DB
   function getEditArticle(editArticle) {
     $.ajax ({
       url: "php/get_content.php",
@@ -202,7 +201,7 @@ function getAllContent() {
       }
     });
   }
-
+  //Spara specifik sida som har blivit editerad till DB
   function saveEditArticle(updateData) {
     console.log("The update data",updateData);
     $.ajax ({
@@ -221,14 +220,13 @@ function getAllContent() {
       }
     });
   }
-  
+  //
   function getArticle(data) {
      console.log("getArticle success: ", data);
     
     $("#page_title").val(data[0]["title"]);
     $("#page_content").val(data[0]["content"]);
     $("#adminUpdateBtn").data('pid', data[0]["pid"]);
-
   }
 
   //Footerhantering*********************************

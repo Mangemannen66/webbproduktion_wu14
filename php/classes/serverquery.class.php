@@ -8,11 +8,11 @@ class ServerQuery extends PDOHelper {
 
   public function saveArticle($page_data) {
 
-  $page_data[":user_id"] = $this->user_info["user_id"];
+    $page_data[":user_id"] = $this->user_info["user_id"];
 
-  $sql = "INSERT INTO pages (title, content, user_id) VALUES (:title, :content, :user_id)";
+    $sql = "INSERT INTO pages (title, content, user_id) VALUES (:title, :content, :user_id)";
 
-  return $this->query($sql, $page_data);
+    return $this->query($sql, $page_data);
 
 
   }
@@ -38,7 +38,6 @@ class ServerQuery extends PDOHelper {
       );
 
     return $this->query($sql2, $url_data);
-    $url_data[":path"] = $this->addMenuLink($url_path);
 
   }
 
@@ -54,14 +53,13 @@ class ServerQuery extends PDOHelper {
       ":weight" => $menu_data["weight"],
       );
 
-      return $this->query($sql, $menu_data);
-    }
+    return $this->query($sql, $menu_data);
+  }
 
   public function getAllArticles(){
 
     $sql = "SELECT pages.pid, pages.title AS pageTitle, CONCAT(users.fname,' ', users.lname) AS author, pages.created
-    FROM pages, users, url_alias
-    WHERE pages.pid = url_alias.pid";
+    FROM pages, users ORDER BY pages.pid DESC";
 
     return $this->query($sql);  
 

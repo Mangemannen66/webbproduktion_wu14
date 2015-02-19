@@ -9,20 +9,19 @@ $("#admin-form form").submit(function() {
 
   var updateA = $('#adminUpdateBtn:visible').length > 0;
   console.log(updateA);
-
+  //Vid sparande av ny sida/artikel
   if (!updateA) {
 
     var adminPageData = {}
     adminPageData[":title"] = $("#page_title").val();
     adminPageData[":content"] = $("#page_content").val();
     
-    console.log("adminPageData: ", adminPageData);
     saveArticle(adminPageData);
-   
+    console.log("adminPageData: ", adminPageData);
 
   } 
   else {
-
+    //Vid uppdatering av befintlig sida
     var updateData = {};
     updateData[":title"] = $("#page_title").val();
     updateData[":content"] = $("#page_content").val();
@@ -30,18 +29,10 @@ $("#admin-form form").submit(function() {
 
     saveEditArticle(updateData);
     console.log("updateData: ", updateData);
-    }
-    return false;
-});
-
-  function getArticle(data) {
-    // console.log("getArticle success: ", data);
-    
-    $("#page_title").val(data[0]["title"]);
-    $("#page_content").val(data[0]["content"]);
-    $("#updateBtn").prop('value', data[0]["pid"]);
   }
 
+  return false;
+});
 
 
   //funktion för att generera alias från "normal"-sträng
@@ -75,11 +66,11 @@ $("#admin-form form").submit(function() {
     return urlText.toLowerCase();
   }
 
-  //Initial döljs menyhanteringsfält
+  //Initial döljs menyhanteringsfält med "hide"
   $("#admin-form .menuLinkFields").hide();
-  //pageUrlGroup clickHandler
+  //pageUrlGroup klickhanterare
   $('#admin-form .pageUrlGroup input[type=checkbox]').click(function() {
-  //enable/disable the page_url input field
+  //checka in eller ut page_url-fältet
   $("#page_url").attr("disabled", !$(this).is(":checked"));
 
     if (!$(this).is(":checked")) {
@@ -88,23 +79,23 @@ $("#admin-form form").submit(function() {
     }
   });
 
-  //adminForm page_title -> page_url keyUp handler
+  //adminForm page_title -> page_url keyUp hanterare
   $("#page_title").keyup(function() {
-    //if #adminForm .pageUrlGroup input[type=checkbox] is !:checked
+    //om #adminForm .pageUrlGroup input[type=checkbox] inte är checkad genereras 
+    //en alias automatiskt
     if (!$('#admin-form .pageUrlGroup input[type=checkbox]').is(":checked")) {
     
       $('#page_url').val(generateServerName($(this).val()));
     }
   });
 
-  //adminForm page_url blur handler
-  //from jQuery documentation: "The blur event is sent to an element when it loses focus"
+
   $("#page_url").blur(function() {
-    //whenever a user "is done" with the page_url input field
+
   $(this).val(generateServerName($(this).val()));
   });
 
-  //adminForm add menu checkbox clickhandler to show/hide add menu fields
+  //adminForm "add menu" checkbox klickhanterare
   $('.addToMenu input[type="checkbox"]').click(function() {
     if ($(this).is(":checked")) {
       $("#admin-form .menuLinkFields").fadeIn(500);

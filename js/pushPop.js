@@ -1,10 +1,18 @@
 //*******************PuchPop**************************
 
 
-
 function showPage(pageUrl) {
-
-  if (pageUrl == "content-list" || pageUrl == "") {
+  getMenuLinks("menu-main-menu", createMainMenu);
+  //Visa och dölj-alternativ
+  if (pageUrl == "home") {
+    pageUrl = "home";
+    $("#admin-form").hide();
+    $("#content-list").hide();
+    $("#adminMenu").hide();
+  }
+  //Om pageUrl är "content-list" eller "ingen sida"
+  //Visa / dölj detta:
+  else if (pageUrl == "content-list" || pageUrl == "") {
    
     pageUrl = "content-list";
     $("#admin-form").hide();
@@ -18,25 +26,27 @@ function showPage(pageUrl) {
     getAllContent();
 
   }
-
-  if (pageUrl == "admin-form") {
+  //Om pageUrl är "admin-form" 
+  //Visa / dölj detta + lägg till klick och submit-hantering
+  else if (pageUrl == "admin-form") {
     pageUrl = "admin-form";
     $("#admin-form").show();
+    $("#admin-form .menuLinkFields").hide();
     $("#content-list").hide();
     getMenuLinks("menu-main-menu", createAdminMenuSelect);
 
     var updateA = false;
 
     $("#adminSubmitBtn").hide();
+    $("#adminUpdateBtn").show();
     $(" #adminUpdateBtn").click(function(){
 
     updateA = true;
     $(" #adminUpdateBtn").submit();
 
-    return false;
+    
     });
   
-    
     $("#adminSubmitBtn").show();
     $("#adminUpdateBtn").hide();
     $(" #adminSubmitBtn").click(function(){
@@ -46,7 +56,21 @@ function showPage(pageUrl) {
     return false;
     });
   }
+
+  else {
+    //get page by url alias
+    
+  }
 }
+
+
+function goTo(href) {
+
+  showPage(href);
+
+  history.pushState(null,null,href);
+}
+
 
 //<a> tags
 function pushPopListeners() {
@@ -67,14 +91,6 @@ function pushPopListeners() {
     event.preventDefault();
   });
 
-
-
-function goTo(href) {
-
-  showPage(href);
-
-  history.pushState(null,null,href);
-}
 
   popUpTheDOM();
 

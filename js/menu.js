@@ -94,3 +94,32 @@ function buildSelectOptions(select_html, menuItems, level) {
   }
   return select_html;
 }
+
+
+function createMainMenu(data) {
+  var menuTree = createMenuTree(data);
+
+  var mainMenuHtml = $("<ul class='nav navbar-nav'/>");
+
+  buildMainMenu(mainMenuHtml, menuTree);
+
+  $("header nav .navbar-collapse .navbar-nav").not(".navbar-right").remove();
+  $("header nav .navbar-collapse").prepend(mainMenuHtml)
+}
+
+function buildMainMenu(menuUlHtml, menuItems) {
+  menuItems.forEach(function(item){
+    var menuLink = $("<li><a href = '"+item.path+"'>"+item.title+"</a></li>");
+
+    if (item.children.length > 0) {
+      menuLink.addClass("dropdown");
+      var dropdown = $("<ul class='dropdown-menu'/>");
+
+      buildMainMenu(dropdown, item.children);
+
+      menuLink.append(dropdown);
+    }
+
+    menuUlHtml.append(menuLink);
+  });
+}

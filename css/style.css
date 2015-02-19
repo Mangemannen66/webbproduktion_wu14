@@ -34,3 +34,12 @@ li {
 address {
   text-align: center;
 }
+.dropdown-menu > .dropdown > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+}
+.dropdown:hover > .dropdown-menu {
+  display: block;
+}
