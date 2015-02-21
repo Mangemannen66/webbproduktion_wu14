@@ -5,7 +5,7 @@ function showPage(pageUrl) {
   getMenuLinks("menu-main-menu", createMainMenu);
   //Visa och dölj-alternativ
   if (pageUrl == "home") {
-    pageUrl = "home";
+  //  pageUrl = "home";
     $("#admin-form").hide();
     $("#content-list").hide();
     $("#adminMenu").hide();
@@ -14,7 +14,7 @@ function showPage(pageUrl) {
   //Visa / dölj detta:
   else if (pageUrl == "content-list" || pageUrl == "") {
    
-    pageUrl = "content-list";
+  //  pageUrl = "content-list";
     $("#admin-form").hide();
     $("#content-list").show();
 
@@ -29,7 +29,7 @@ function showPage(pageUrl) {
   //Om pageUrl är "admin-form" 
   //Visa / dölj detta + lägg till klick och submit-hantering
   else if (pageUrl == "admin-form") {
-    pageUrl = "admin-form";
+  //  pageUrl = "admin-form";
     $("#admin-form").show();
     $("#admin-form .menuLinkFields").hide();
     $("#content-list").hide();
@@ -42,18 +42,14 @@ function showPage(pageUrl) {
     $(" #adminUpdateBtn").click(function(){
 
     updateA = true;
-    $(" #adminUpdateBtn").submit();
-
-    
+   
     });
   
     $("#adminSubmitBtn").show();
     $("#adminUpdateBtn").hide();
     $(" #adminSubmitBtn").click(function(){
     updateA = false;
-    $(" #adminSubmitBtn").submit();
 
-    return false;
     });
   }
 

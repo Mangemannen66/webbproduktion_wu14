@@ -15,7 +15,5 @@ if (isset($_REQUEST["page_url"])) {
 if (isset($_REQUEST["menu_data"])) {
   echo(json_encode($query->addMenuLink($_REQUEST["menu_data"])));
 }
-if (isset($_REQUEST["update_data"])) {
-  echo(json_encode($query->saveEditArticle($_REQUEST["update_data"])));
-}
+
 

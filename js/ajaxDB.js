@@ -20,7 +20,7 @@ function saveArticle(adminPageData) {
     }
   });
    
-  return false;
+
 }
 
 function saveUrl() {
@@ -205,7 +205,7 @@ function getAllContent() {
   function saveEditArticle(updateData) {
     console.log("The update data",updateData);
     $.ajax ({
-      url: "php/article_save.php",
+      url: "php/article_update.php",
       type: "post",
       dataType: "json",
       data: {
