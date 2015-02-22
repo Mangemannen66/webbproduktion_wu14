@@ -172,7 +172,6 @@ function getAllContent() {
             var contentRowDataButtons = $('<td/>');
             contentRowDataButtons.append('<div class="btn-group btn-group-xs"/>');
             contentRowDataButtons.find(".btn-group").append('<button type="button" class="editArticle btn btn-default editBtn" title="Editera sidan" value="'+data[i]["pid"]+'"><span class="glyphicon glyphicon-pencil"></span></button>');
-            contentRowDataButtons.find(".btn-group").append('<button type="button" class="btn btn-default trashBtn" title="Ta bort"><span class="glyphicon glyphicon-trash"></span></button>');
             contentRowData.append(contentRowDataButtons);
                /*
                contentRowData.append('<td><a pageUrl="#"><span class="badge">Editera</span></a></td>');
@@ -227,7 +226,8 @@ function getAllContent() {
       },
       success: function(data) {
         console.log("updateData success: ", data);
-         //$("#admin-form")[0].reset();
+        $("#admin-form form")[0].reset();
+        goTo("content-list");
       },
       error: function(data) {
         console.log("updateData error: ", data);
