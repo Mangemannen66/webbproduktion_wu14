@@ -2,24 +2,31 @@
 
 
 function showPage(pageUrl) {
+
+      if (!pageUrl || pageUrl == "home") {
+      pageUrl = "start";
+      $("#page").show();
+    }
   getMenuLinks("menu-main-menu", createMainMenu);
   //Visa och dölj-alternativ
-  if (pageUrl == "home" || pageUrl == "") {
-  //  pageUrl = "home";
+  if (pageUrl == "home") {
+    pageUrl = "start";
     $("#admin-form").hide();
     $("#content-list").hide();
     $("#adminMenu").hide();
+    $("#adminBanner").hide();
     $("#page").fadeIn(400);
       $("#adminNav").hide();
   $('#adminEdit').click(function() {
     $("#content-list").fadeIn(300);
     $("#adminNav").fadeIn(300);
     $("#page").hide();
+    $("#adminBanner").show();
     pageUrl == "content-list";
     getAllContent();
   });
   }
-  //Om pageUrl är "content-list" eller "ingen sida"
+  //Om pageUrl är "content-list"
   //Visa / dölj detta:
   else if (pageUrl == "content-list") {
    
@@ -67,16 +74,45 @@ function showPage(pageUrl) {
 
      getSingleArticle(pageUrl);
 
+
      pageUrl = "page";
+     $("#admin-form").hide();
+     $("#content-list").hide();
+     $("#adminMenu").hide();
+     $("#adminBanner").hide();
+     $("#adminEdit").show();
+     $("#adminNav").hide();
+     $('#adminEdit').click(function() {
+     $("#content-list").fadeIn(300);
+     $("#adminNav").fadeIn(300);
+     $("#page").hide();
+     $("#adminBanner").show();
+     pageUrl == "content-list";
+     getAllContent();
+  });
      $("#page").fadeIn(300);
-    
+
+
+  $(".nav li").removeClass("active");
+
+  //then find any links pointing to the pageUrl,
+  $("body").find('a[href="'+pageUrl+'"]').each(function() {
+    //and add .active to my parent if it is an li tag
+    $(this).parent("li").addClass("active");
+  });
+
+
   }
+
 }
 
 
 function goTo(href) {
 
   showPage(href);
+
+
+    
 
   history.pushState(null,null,href);
 }
@@ -108,11 +144,11 @@ function pushPopListeners() {
   function popUpTheDOM(){
 
     var l = location.href;
-    var pageName = l.substring(l.lastIndexOf("/")+1);
+    var pageUrl = l.substring(l.lastIndexOf("/")+1);
 
-    pageName = pageName || false;
-    console.log("pageName: ", pageName);
+    pageUrl = pageUrl || false;
+    console.log("pageUrl: ", pageUrl);
     
-    showPage(pageName);
+    showPage(pageUrl);
   }
 }

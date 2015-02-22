@@ -252,7 +252,7 @@ function getAllContent() {
     success: function(data){
     $(".footer_info").empty();
     console.log("footer success: ", data);
-    $(".footer_info").append("<br><address class='footer_info'><b>" 
+    $(".footer_info").append("<address class='footer_info'><b>" 
     + data[0].name + " </b>&nbsp; "
     + data[0].street + " &nbsp;"
     + data[0].postalcode + " &nbsp;"

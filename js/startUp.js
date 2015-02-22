@@ -3,14 +3,10 @@ function startUp() {
     //setup history push/pop-state
     pushPopListeners();
 
-
-
-
-
-
-
-
-
+$("page").hide();
+$("admin-form").hide();
+$("content-list").hide();
+$("adminBanner").hide();
 
 
 //*************submit-handler och AJAX*******************
@@ -115,7 +111,18 @@ $("#admin-form form").submit(function() {
 
     $(".addToMenu #menu_title").attr("required", $(this).is(":checked"));
   });
-    
+
+  
+  //adminForm "add image" checkbox klickhanterare
+  $('.addImage input[type="checkbox"]').click(function() {
+    if ($(this).is(":checked")) {
+      $("#admin-form .imageLinkFields").fadeIn(500);
+    } else {
+      $("#admin-form .imageLinkFields").fadeOut(500);
+    }
+
+    $(".addImage #image_title").attr("required", $(this).is(":checked"));
+  });    
 
 }
 

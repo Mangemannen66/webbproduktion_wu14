@@ -99,12 +99,13 @@ function buildSelectOptions(select_html, menuItems, level) {
 function createMainMenu(data) {
   var menuTree = createMenuTree(data);
 
-  var mainMenuHtml = $("<ul class='nav navbar-nav'/>");
+  var mainMenuHtml = $('<ul class="nav navbar-nav mainMenu"/>');
 
   buildMainMenu(mainMenuHtml, menuTree);
 
   $("header nav .navbar-collapse .navbar-nav").not(".navbar-right").remove();
-  $("header nav .navbar-collapse").prepend(mainMenuHtml)
+  $("header nav .navbar-collapse").prepend(mainMenuHtml);
+
 }
 
 function buildMainMenu(menuUlHtml, menuItems) {
@@ -113,7 +114,7 @@ function buildMainMenu(menuUlHtml, menuItems) {
 
     if (item.children.length > 0) {
       menuLink.addClass("dropdown");
-      var dropdown = $("<ul class='dropdown-menu'/>");
+      var dropdown = $('<ul class="dropdown-menu"/>');
 
       buildMainMenu(dropdown, item.children);
 
@@ -121,5 +122,7 @@ function buildMainMenu(menuUlHtml, menuItems) {
     }
 
     menuUlHtml.append(menuLink);
+
   });
+ 
 }
