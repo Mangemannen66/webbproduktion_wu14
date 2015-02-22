@@ -123,6 +123,20 @@ function getMenuLinks(menu_name, successFunction) {
  
 }
 
+function getSingleArticle(href) {
+  $.ajax ({
+    url: "php/get_article.php",
+    type:"get",
+    dataType: "json",
+    data: {
+      "href": href
+      },
+      success: showSingleArticle,
+      error: function(data) {
+      console.log("getSingleArticle error ", data.responseText);
+      }
+  });
+}
 
 
 
@@ -161,8 +175,8 @@ function getAllContent() {
             contentRowDataButtons.find(".btn-group").append('<button type="button" class="btn btn-default trashBtn" title="Ta bort"><span class="glyphicon glyphicon-trash"></span></button>');
             contentRowData.append(contentRowDataButtons);
                /*
-               contentRowData.append('<td><a href="#"><span class="badge">Editera</span></a></td>');
-               contentRowData.append('<td><a href="#"><span class="badge">Ta bort</span></a></td>');
+               contentRowData.append('<td><a pageUrl="#"><span class="badge">Editera</span></a></td>');
+               contentRowData.append('<td><a pageUrl="#"><span class="badge">Ta bort</span></a></td>');
         */
           //then append contentRowData to the #content-list table
           $("#content-list table").append(contentRowData);
@@ -243,7 +257,7 @@ function getAllContent() {
     + data[0].street + " &nbsp;"
     + data[0].postalcode + " &nbsp;"
     + data[0].city + "&nbsp;&nbsp;<b>Telefon:</b>&nbsp;"
-    + data[0].phone + "&nbsp;&nbsp;<b>Email:<a href='mailto:mumin@barbapappa.klump'></b>&nbsp;"
+    + data[0].phone + "&nbsp;&nbsp;<b>Email:<a pageUrl='mailto:mumin@barbapappa.klump'></b>&nbsp;"
     + data[0].email + "</a>&nbsp;&nbsp;<em>" + data[0].info + "</em></address> ");
     },
     error: function(data){

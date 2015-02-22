@@ -25,12 +25,6 @@ body > .container {
 textarea {
   resize: none;
 }
-.navbar-header {
-  margin-left: 5px;
-}
-li {
-  float: left;
-}
 address {
   text-align: center;
 }

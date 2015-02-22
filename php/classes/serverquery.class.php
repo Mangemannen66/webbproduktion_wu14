@@ -65,6 +65,35 @@ class ServerQuery extends PDOHelper {
 
   }
 
+/*
+  public function getArticleFromAlias($href) {
+      $single_article = array(":pid" => $href);
+      $sql ="SELECT * FROM pages WHERE pid = :pid";
+      $single_article_data = $this->query($sql, $single_article);
+
+      return $single_article_data;
+}
+*/
+
+  public function getArticleFromAlias($href) {
+  
+  $sql="SELECT pages.*, url_alias.path FROM pages, url_alias WHERE pages.pid = url_alias.pid AND url_alias.path = :href";
+  $href=array(":href"=>$href);
+  return $this->query($sql,$href);
+  } 
+  
+
+
+/*
+  public function getArticleFromAlias($alias) {
+    $sql = "SELECT * FROM pages WHERE pid = :pid";
+   // $page_data = array(":pid" => $url_result[0]["pid"]);
+    $page_data = $this->query($sql, $page_data);
+
+    return $this->query($sql, $page_data);
+  }
+  */
+
   public function getEditArticle($edit_article) {
       $this_article = array(":pid" => $edit_article);
       $sql ="SELECT * FROM pages WHERE pid = :pid";

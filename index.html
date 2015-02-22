@@ -10,14 +10,14 @@
        
         <script src="js/pushPop.js"></script>
         <script src="js/ajaxDB.js"></script>
-       <!-- <script src="js/page.js"></script> -->
+        <script src="js/pages.js"></script>
         <script src="js/menu.js"></script>
         <script src="js/startUp.js"></script>
         <script src="js/main.js"></script>
         
     <!--  <script src="js/main_2.js"></script> --> 
 
-	  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 	  <link href="css/hover-min.css" rel="stylesheet">
 	  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all">
   	  <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -46,15 +46,16 @@
            -->
       </div>
       <div class="collapse navbar-collapse" id="md-navbar-collapse">
-        
+        <div id="adminNav">
         <ul class="nav navbar-nav navbar-right">
           <li><a class="navbar-brand" href="content-list">Lista Artiklar</a></li>
           <li><a class="navbar-brand" href="admin-form">Admin Formulär</a></li>
         </ul>
+        </div>
       </div>
     </nav>
 
-   <div class="banner col-sm-offset-2 col-xs-12 col-sm-12 col-md-10 col-lg-10"> <h2>MAGASINET - Administrering</h2></div>
+   <div class="banner col-sm-offset-0 col-xs-12 col-sm-12 col-md-12 col-lg-12"> <h2>MAGASINET - Administrering</h2></div>
   </section>
   </header>
 <!--
@@ -73,7 +74,9 @@
   <main class="container">
     <section class="row">
     <!--För visning av enskild artikel-->
-    <section id="article" class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+    <section id="page" class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+    <p>testar lite</p>
+
     </section>
       <section id="content-list" class="col-sm-offset-0 col-md-offset-0 col-lg-offset-0 col-xs-12 col-sm-12 col-md-11 col-lg-12">
          <div class="panel panel-default">
@@ -95,17 +98,13 @@
                 </table>
           </div>
       </section>
-    <section id="adminNav">
-      
 
-
-    </section>
     <section id="admin-form" class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
 
     <form class="form-horizontal">
  
       <div class="form-group">
-      	<label class="col-sm-4 control-label" for="page_titel">Sidans Namn:</label>
+      	<label class="col-sm-4 control-label" for="page_title">Sidans Namn:</label>
       	<div class="col-sm-8">
       	  <input type="text" id="page_title" class="form-control" placeholder="Skriv in ett namn på sidan." required>
       	</div>
@@ -161,6 +160,11 @@
     </main> 
   </section>
     <footer class="footer">
+    <div class="navbar-btn pull-left">
+      <button type="button" id="adminEdit" class="btn btn-default btn-sm">
+          <span class="glyphicon glyphicon-list-alt"></span>
+      </button>      
+    </div>
       <section class="footer_info" class=" col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
       </section>

@@ -3,6 +3,16 @@ function startUp() {
     //setup history push/pop-state
     pushPopListeners();
 
+
+
+
+
+
+
+
+
+
+
 //*************submit-handler och AJAX*******************
 
 $("#admin-form form").submit(function() {

@@ -4,15 +4,24 @@
 function showPage(pageUrl) {
   getMenuLinks("menu-main-menu", createMainMenu);
   //Visa och dölj-alternativ
-  if (pageUrl == "home") {
+  if (pageUrl == "home" || pageUrl == "") {
   //  pageUrl = "home";
     $("#admin-form").hide();
     $("#content-list").hide();
     $("#adminMenu").hide();
+    $("#page").fadeIn(400);
+      $("#adminNav").hide();
+  $('#adminEdit').click(function() {
+    $("#content-list").fadeIn(300);
+    $("#adminNav").fadeIn(300);
+    $("#page").hide();
+    pageUrl == "content-list";
+    getAllContent();
+  });
   }
   //Om pageUrl är "content-list" eller "ingen sida"
   //Visa / dölj detta:
-  else if (pageUrl == "content-list" || pageUrl == "") {
+  else if (pageUrl == "content-list") {
    
   //  pageUrl = "content-list";
     $("#admin-form").hide();
@@ -55,6 +64,11 @@ function showPage(pageUrl) {
 
   else {
     //get page by url alias
+
+     getSingleArticle(pageUrl);
+
+     pageUrl = "page";
+     $("#page").fadeIn(300);
     
   }
 }
